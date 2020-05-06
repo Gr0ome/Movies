@@ -125,31 +125,33 @@ function arrayFill(arraylength, arrayData) {
   return arr;
 }
 
-function getMovies() {
+function Movie() {
+  this.id = getMovieId();
+  this.name = movieTitles[randomNumber(0, 24)];
+  this.price = moviePrice[randomNumber(0, 2)];
+  this.rating = randomNumber(0, 10);
+  this.duration = randomNumber(0, 180);
+  this.genre = arrayFill(randomNumber(1, 4), movieGenres);
+  this.description = "Описание";
+  this.языки = arrayFill(randomNumber(1, 3), movieLaguages);
+  this.актеры = arrayFill(randomNumber(1, 10), actors);
+  this.videoQuality = movieQuality[randomNumber(0, 3)];
+  this.recommended = arrayFill(randomNumber(1, 5), "numbers");
+  this.reviews = arrayFill(randomNumber(1, 4), movieComments);
+  this.videoSrc = "video.url";
+}
+
+function getMovies(moviesQuantity) {
   let movieArray = [];
 
-  while (movieArray.length < 25) {
-    let movie = {
-      id: getMovieId(),
-      name: movieTitles[randomNumber(0, 24)],
-      price: moviePrice[randomNumber(0, 2)],
-      rating: randomNumber(0, 10),
-      duration: randomNumber(0, 180),
-      genre: arrayFill(randomNumber(1, 4), movieGenres),
-      description: "Описание",
-      языки: arrayFill(randomNumber(1, 3), movieLaguages),
-      актеры: arrayFill(randomNumber(1, 10), actors),
-      videoQuality: movieQuality[randomNumber(0, 3)],
-      recommended: arrayFill(randomNumber(1, 5), "numbers"),
-      reviews: arrayFill(randomNumber(1, 4), movieComments),
-      videoSrc: "video.url",
-    };
+  while (movieArray.length < moviesQuantity) {
+    let movie = new Movie();
     movieArray.push(movie);
   }
 
   return movieArray;
 }
 
-const movies = getMovies();
+const movies = getMovies(25);
 
 console.log(movies);
