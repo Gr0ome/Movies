@@ -156,5 +156,3 @@ function getMovies(moviesQuantity) {
 }
 
 const movies = getMovies(25);
-
-//console.log(movies);

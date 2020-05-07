@@ -1,17 +1,19 @@
-genresOptionFill("genreSel", movieGenres);
-genresOptionFill("languagesSel", movieLaguages);
-genresOptionFill("priceSel", moviePrice);
-document.querySelector("#priceSel").options[2].text = "Платно";
+function onIndexLoad() {
+  genresOptionFill("genreSel", movieGenres);
+  genresOptionFill("languagesSel", movieLaguages);
+  genresOptionFill("priceSel", moviePrice);
+  document.querySelector("#priceSel").options[2].text = "Платно";
 
-function genresOptionFill(selId, array) {
-  let querySelectorId = `#${selId}`;
-  let selectElement = document.querySelector(querySelectorId);
+  function genresOptionFill(selId, array) {
+    let querySelectorId = `#${selId}`;
+    let selectElement = document.querySelector(querySelectorId);
 
-  for (let genre in array) {
-    selectElement.options[selectElement.options.length] = new Option(
-      array[genre],
-      genre
-    );
+    for (let genre in array) {
+      selectElement.options[selectElement.options.length] = new Option(
+        array[genre],
+        genre
+      );
+    }
   }
 }
 
@@ -40,12 +42,29 @@ function showMovieTitles() {
       isPropSelect(movie, "price") &&
       isPropSelect(movie, "languages")
     ) {
+      let selectedMovie = movies[movie];
+
       movieDiv += `<div class="movie-from-list">
-      Название: ${movies[movie].name}<br>
-      Цена: ${movies[movie].price}<br>
-      Рейтинг: ${movies[movie].rating}<br>
-      Продолжительность: ${movies[movie].duration} мин.<br>
-      Жанры: ${movies[movie].genre}
+      <span>
+        Название:<a
+                  class="title-link"
+                  href="movie.html?id=${selectedMovie.id}" 
+                  title="Перейти к фильму">
+                  ${selectedMovie.name}                
+                 </a>
+      </span><br>
+      <span>
+        Цена: ${selectedMovie.price}
+      </span><br>
+      <span>
+        Рейтинг: ${selectedMovie.rating}
+      </span><br>
+      <span>
+        Продолжительность: ${selectedMovie.duration} мин.
+      </span><br>
+      <span>
+        Жанры: ${selectedMovie.genre}
+      </span>
       </div>`;
     }
   }
