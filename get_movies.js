@@ -51,7 +51,7 @@ const movieComments = [
   "Сереал суппер! актёры, сюжет! Очень интересный! Единственный минус это ДУБЛЯЖ после второго сезона не очень!! У него сходство с сереалом ДРЕВНИЕ!! Про Клауса! Вобщем оценка 10/10",
 ];
 
-let moviePrice = ["подписка", `${randomNumber(0, 1000)}$`, "бесплатно"];
+let moviePrice = ["Подписка", `$`, "Бесплатно"];
 
 const actors = [
   {
@@ -129,12 +129,15 @@ function Movie() {
   this.id = getMovieId();
   this.name = movieTitles[randomNumber(0, 24)];
   this.price = moviePrice[randomNumber(0, 2)];
+  if (this.price === "$") {
+    this.price = `${randomNumber(0, 1000)}$`;
+  }
   this.rating = randomNumber(0, 10);
-  this.duration = randomNumber(0, 180);
+  this.duration = randomNumber(20, 180);
   this.genre = arrayFill(randomNumber(1, 4), movieGenres);
   this.description = "Описание";
-  this.языки = arrayFill(randomNumber(1, 3), movieLaguages);
-  this.актеры = arrayFill(randomNumber(1, 10), actors);
+  this.languages = arrayFill(randomNumber(1, 3), movieLaguages);
+  this.actors = arrayFill(randomNumber(1, 10), actors);
   this.videoQuality = movieQuality[randomNumber(0, 3)];
   this.recommended = arrayFill(randomNumber(1, 5), "numbers");
   this.reviews = arrayFill(randomNumber(1, 4), movieComments);
@@ -154,4 +157,4 @@ function getMovies(moviesQuantity) {
 
 const movies = getMovies(25);
 
-console.log(movies);
+//console.log(movies);

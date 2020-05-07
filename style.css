@@ -1,0 +1,42 @@
+.left-block {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 20%;
+  height: 100%;
+  background: darkred;
+  color: #fff;
+  overflow: auto;
+}
+.right-block {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 80%;
+  height: 100%;
+  background: black;
+  color: #fff;
+  overflow: auto;
+  box-shadow: 0 0 5px 2px goldenrod;
+}
+
+.left-block-select {
+  margin: 20px;
+}
+
+.select-button {
+  margin-top: 10px;
+}
+
+.select {
+  margin-top: 10px;
+}
+
+.movie-from-list {
+  border: 1px solid goldenrod;
+  padding: 15px;
+}
+
+.select-title {
+  background-color: rgba(255, 187, 0, 0.692);
+}
