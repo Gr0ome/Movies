@@ -8,10 +8,10 @@ function onIndexLoad() {
     let querySelectorId = `#${property}Sel`;
     let selectElement = document.querySelector(querySelectorId);
 
-    for (let property in array) {
+    for (let prop in propertyArray) {
       selectElement.options[selectElement.options.length] = new Option(
-        propertyArray[property],
-        property
+        propertyArray[prop],
+        prop
       );
     }
   }
