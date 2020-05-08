@@ -1,11 +1,11 @@
 function onIndexLoad() {
-  genresOptionFill("genreSel", movieGenres);
-  genresOptionFill("languagesSel", movieLaguages);
-  genresOptionFill("priceSel", moviePrice);
+  genresOptionFill("genre", movieGenres);
+  genresOptionFill("languages", movieLaguages);
+  genresOptionFill("price", moviePrice);
   document.querySelector("#priceSel").options[2].text = "Платно";
 
   function genresOptionFill(selId, array) {
-    let querySelectorId = `#${selId}`;
+    let querySelectorId = `#${selId}Sel`;
     let selectElement = document.querySelector(querySelectorId);
 
     for (let genre in array) {
