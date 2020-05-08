@@ -4,14 +4,14 @@ function onIndexLoad() {
   genresOptionFill("price", moviePrice);
   document.querySelector("#priceSel").options[2].text = "Платно";
 
-  function genresOptionFill(selId, array) {
-    let querySelectorId = `#${selId}Sel`;
+  function genresOptionFill(property, propertyArray) {
+    let querySelectorId = `#${property}Sel`;
     let selectElement = document.querySelector(querySelectorId);
 
-    for (let genre in array) {
+    for (let property in array) {
       selectElement.options[selectElement.options.length] = new Option(
-        array[genre],
-        genre
+        propertyArray[property],
+        property
       );
     }
   }
