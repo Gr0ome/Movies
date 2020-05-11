@@ -2,7 +2,8 @@
   "name": "movies",
   "description": "movie list",
   "scripts": {
-    "build": "webpack"
+    "start": "webpack",
+    "build": "webpack --mode production"
   },
   "devDependencies": {
     "eslint": "^6.8.0",

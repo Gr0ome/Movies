@@ -3,7 +3,4 @@ function getRandomNumber(min, max) {
   return Math.floor(random);
 }
 
-// eslint-disable-next-line import/prefer-default-export
 export { getRandomNumber };
-
-// export default getRandomNumber;

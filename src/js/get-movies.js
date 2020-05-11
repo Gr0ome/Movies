@@ -92,11 +92,19 @@ const actors = [
   },
 ];
 
-const MAX_MOVIE_LENGTH = 25;
-const MAX_MOVIE_PRICE = 1000;
-const MIN_MOVIE_DURATION = 20;
-const MAX_MOVIE_DURATION = 180;
-const MAX_MOVIE_ACTORS_QUANTITY = 10;
+const RULES = {
+  MOVIE: {
+    MAX: {
+      QUANTITY: 25,
+      PRICE: 1000,
+      DURATION: 180,
+      ACTORS_QUANTITY: 10,
+    },
+    MIN: {
+      DURATION: 20,
+    },
+  },
+};
 
 function setNumberArray(length) {
   const arr = [];
@@ -145,14 +153,14 @@ function Movie(movie) {
 function getRandomMovie(i) {
   const randomMovie = {
     id: i,
-    name: movieTitles[getRandomNumber(0, MAX_MOVIE_LENGTH - 1)],
+    name: movieTitles[getRandomNumber(0, RULES.MOVIE.MAX.QUANTITY - 1)],
     price: moviePrice[getRandomNumber(0, moviePrice.length - 1)],
     rating: getRandomNumber(1, 10),
-    duration: getRandomNumber(MIN_MOVIE_DURATION, MAX_MOVIE_DURATION),
+    duration: getRandomNumber(RULES.MOVIE.MIN.DURATION, RULES.MOVIE.MAX.DURATION),
     genre: setArrayFromArray(getRandomNumber(1, 4), movieGenres),
     description: "Описание",
     languages: setArrayFromArray(getRandomNumber(1, 3), movieLaguages),
-    actors: setArrayFromArray(getRandomNumber(0, MAX_MOVIE_ACTORS_QUANTITY - 1), actors),
+    actors: setArrayFromArray(getRandomNumber(0, RULES.MOVIE.MAX.ACTORS_QUANTITY - 1), actors),
     videoQuality: movieQuality[getRandomNumber(0, movieQuality.length - 1)],
     recommended: setNumberArray(5),
     reviews: setArrayFromArray(getRandomNumber(1, 4), movieComments),
@@ -160,7 +168,7 @@ function getRandomMovie(i) {
   };
 
   if (randomMovie.price === "$") {
-    randomMovie.price = `${getRandomNumber(1, MAX_MOVIE_PRICE)}$`;
+    randomMovie.price = `${getRandomNumber(1, RULES.MOVIE.MAX.PRICE)}$`;
   }
 
   return randomMovie;

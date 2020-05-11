@@ -1,6 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable guard-for-in */
-
 import {
   movieGenres,
   movieLaguages,
@@ -11,7 +8,7 @@ import {
 // Наполенине select'ов опциями
 function setOptionsIntoSelects() {
   function genresOptionFill(property, propertyArray) {
-    const querySelectorId = `#${property}Sel`;
+    const querySelectorId = `#${property}-sel`;
     const selectElement = document.querySelector(querySelectorId);
 
     for (const prop in propertyArray) {
@@ -24,13 +21,13 @@ function setOptionsIntoSelects() {
   genresOptionFill("genre", movieGenres);
   genresOptionFill("languages", movieLaguages);
   genresOptionFill("price", moviePrice);
-  document.querySelector("#priceSel").options[2].text = "Платно";
+  document.querySelector("#price-sel").options[2].text = "Платно";
 }
 
 function isPropSelect(movie, property) {
-  const selectValue = document.querySelector(`#${property}Sel`).value;
+  const selectValue = document.querySelector(`#${property}-sel`).value;
 
-  if (selectValue === "selectTitle") return true;
+  if (selectValue === "select-title") return true;
 
   switch (property) {
     case "genre":
@@ -45,7 +42,7 @@ function isPropSelect(movie, property) {
 }
 
 function showMovieTitles() {
-  const moviesList = document.querySelector("#movieList");
+  const moviesList = document.querySelector("#movie-list");
   let movieDiv = "";
 
   for (const movie in movies) {
