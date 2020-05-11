@@ -1,3 +1,7 @@
+import {
+  getRandomNumber,
+} from "./utils";
+
 const movieTitles = [
   "За деревьями",
   "Апгрейд",
@@ -26,15 +30,7 @@ const movieTitles = [
   "Карты, деньги, два ствола",
 ];
 
-const movieGenres = [
-  "Боевик",
-  "Ужасы",
-  "Фантсатсика",
-  "Романтика",
-  "Комедия",
-  "Семейный",
-  "Спорт",
-];
+const movieGenres = ["Боевик", "Ужасы", "Фантсатсика", "Романтика", "Комедия", "Семейный", "Спорт"];
 
 const movieLaguages = ["Английский", "Русский", "Украинский", "Французкий"];
 
@@ -47,11 +43,11 @@ const movieComments = [
   "Супер сериал",
   "Сериал для детей, муть",
   "Мдааа.Конечно то что в жизни разошлись Самерхолдер и Добрев, положило жирный такой отпечаток на сценарий!Если бы не этот факт последних 2 сезона могли бы быть более достойными, и как последняя серия в которые впихнули всё что можно и нельзя!!! А так спасибо всем актёрам большое!",
-  'Елена Гилберт переживает трагедию – в автокатастрофе она потеряла родителей и брата." Брата она не теряла!!!! он принимает активное участие в жизни. Исправте, пожалуйста',
+  "Елена Гилберт переживает трагедию – в автокатастрофе она потеряла родителей и брата. Брата она не теряла!!!!он принимает активное участие в жизни.Исправте, пожалуйста ",
   "Сереал суппер! актёры, сюжет! Очень интересный! Единственный минус это ДУБЛЯЖ после второго сезона не очень!! У него сходство с сереалом ДРЕВНИЕ!! Про Клауса! Вобщем оценка 10/10",
 ];
 
-let moviePrice = ["Подписка", `$`, "Бесплатно"];
+const moviePrice = ["Подписка", "$", "Бесплатно"];
 
 const actors = [
   {
@@ -96,59 +92,94 @@ const actors = [
   },
 ];
 
-function randomNumber(min, max) {
-  let random = min + Math.random() * (max + 1 - min);
-  return Math.floor(random);
-}
+const RULES = {
+  MOVIE: {
+    MAX: {
+      QUANTITY: 25,
+      PRICE: 1000,
+      DURATION: 180,
+      ACTORS_QUANTITY: 10,
+    },
+    MIN: {
+      DURATION: 20,
+    },
+  },
+};
 
-let moviesId = 1;
+function setNumberArray(length) {
+  const arr = [];
 
-function getMovieId() {
-  return moviesId++;
-}
+  while (arr.length < length) {
+    const randNumber = getRandomNumber(0, length);
 
-function arrayFill(arraylength, arrayData) {
-  let arr = [];
-
-  if (arrayData === "numbers") {
-    while (arr.length !== arraylength) {
-      let randNumber = randomNumber(0, 24);
-      if (!arr.includes(randNumber)) arr.push(randNumber);
-    }
-  } else {
-    while (arr.length !== arraylength) {
-      let randValue = arrayData[randomNumber(0, arrayData.length - 1)];
-      if (!arr.includes(randValue)) arr.push(randValue);
+    if (!arr.includes(randNumber)) {
+      arr.push(randNumber);
     }
   }
 
   return arr;
 }
 
-function Movie() {
-  this.id = getMovieId();
-  this.name = movieTitles[randomNumber(0, 24)];
-  this.price = moviePrice[randomNumber(0, 2)];
-  if (this.price === "$") {
-    this.price = `${randomNumber(0, 1000)}$`;
+function setArrayFromArray(length, array) {
+  const arr = [];
+
+  while (arr.length < length) {
+    const randArrayValue = array[getRandomNumber(0, array.length - 1)];
+
+    if (!arr.includes(randArrayValue)) {
+      arr.push(randArrayValue);
+    }
   }
-  this.rating = randomNumber(0, 10);
-  this.duration = randomNumber(20, 180);
-  this.genre = arrayFill(randomNumber(1, 4), movieGenres);
-  this.description = "Описание";
-  this.languages = arrayFill(randomNumber(1, 3), movieLaguages);
-  this.actors = arrayFill(randomNumber(1, 10), actors);
-  this.videoQuality = movieQuality[randomNumber(0, 3)];
-  this.recommended = arrayFill(randomNumber(1, 5), "numbers");
-  this.reviews = arrayFill(randomNumber(1, 4), movieComments);
-  this.videoSrc = "video.url";
+
+  return arr;
+}
+
+function Movie(movie) {
+  this.id = movie.id;
+  this.name = movie.name;
+  this.price = movie.price;
+  this.rating = movie.rating;
+  this.duration = movie.duration;
+  this.genre = movie.genre;
+  this.description = movie.description;
+  this.languages = movie.languages;
+  this.actors = movie.actors;
+  this.videoQuality = movie.videoQuality;
+  this.recommended = movie.recommended;
+  this.reviews = movie.reviews;
+  this.videoSrc = movie.videoSrc;
+}
+
+function getRandomMovie(i) {
+  const randomMovie = {
+    id: i,
+    name: movieTitles[getRandomNumber(0, RULES.MOVIE.MAX.QUANTITY - 1)],
+    price: moviePrice[getRandomNumber(0, moviePrice.length - 1)],
+    rating: getRandomNumber(1, 10),
+    duration: getRandomNumber(RULES.MOVIE.MIN.DURATION, RULES.MOVIE.MAX.DURATION),
+    genre: setArrayFromArray(getRandomNumber(1, 4), movieGenres),
+    description: "Описание",
+    languages: setArrayFromArray(getRandomNumber(1, 3), movieLaguages),
+    actors: setArrayFromArray(getRandomNumber(0, RULES.MOVIE.MAX.ACTORS_QUANTITY - 1), actors),
+    videoQuality: movieQuality[getRandomNumber(0, movieQuality.length - 1)],
+    recommended: setNumberArray(5),
+    reviews: setArrayFromArray(getRandomNumber(1, 4), movieComments),
+    videoSrc: "video.url",
+  };
+
+  if (randomMovie.price === "$") {
+    randomMovie.price = `${getRandomNumber(1, RULES.MOVIE.MAX.PRICE)}$`;
+  }
+
+  return randomMovie;
 }
 
 function getMovies(moviesQuantity) {
-  let movieArray = [];
+  const movieArray = [];
 
-  while (movieArray.length < moviesQuantity) {
-    let movie = new Movie();
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < moviesQuantity; i++) {
+    const movie = new Movie(getRandomMovie(i));
     movieArray.push(movie);
   }
 
@@ -156,3 +187,10 @@ function getMovies(moviesQuantity) {
 }
 
 const movies = getMovies(25);
+
+export {
+  movieGenres,
+  movieLaguages,
+  moviePrice,
+  movies,
+};

@@ -1,36 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <script src="get_movies.js"></script>
-    <title>Movie list</title>
-  </head>
-  <body onload="onIndexLoad();showMovieTitles()">
-    <div class="left-block">
-      <div class="left-block-select">
-        <select class="select" name="genres-select" id="genreSel">
-          <option class="select-title" value="selectTitle">Жанр</option>
-        </select>
-        <br />
-        <select class="select" name="lang-select" id="languagesSel">
-          <option class="select-title" value="selectTitle">Язык</option>
-        </select>
-        <br />
-        <select class="select" name="price-select" id="priceSel">
-          <option class="select-title" value="selectTitle">Цена</option>
-        </select>
-        <br />
-        <button class="select-button" onclick="showMovieTitles()">
-          Выбрать
-        </button>
-      </div>
-    </div>
-    <div class="right-block">
-      <div id="movieList"></div>
-    </div>
 
-    <script src="html_fill.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Movie list</title>
+</head>
+
+<body>
+  <div class="left-block">
+    <div class="left-block-select">
+      <select class="select" name="genres-select" id="genre-sel">
+        <option class="select-title" value="select-title">Жанр</option>
+      </select>
+      <br />
+      <select class="select" name="lang-select" id="languages-sel">
+        <option class="select-title" value="select-title">Язык</option>
+      </select>
+      <br />
+      <select class="select" name="price-select" id="price-sel">
+        <option class="select-title" value="select-title">Цена</option>
+      </select>
+      <br />
+      <button class="select-button">
+        Выбрать
+      </button>
+    </div>
+  </div>
+  <div class="right-block">
+    <div id="movie-list"></div>
+  </div>
+
+  
+  <script src="./public/bundle.js"></script>
+</body>
+
 </html>

@@ -1,26 +1,33 @@
-function onIndexLoad() {
-  genresOptionFill("genre", movieGenres);
-  genresOptionFill("languages", movieLaguages);
-  genresOptionFill("price", moviePrice);
-  document.querySelector("#priceSel").options[2].text = "Платно";
+import {
+  movieGenres,
+  movieLaguages,
+  moviePrice,
+  movies,
+} from "./get-movies";
 
+// Наполенине select'ов опциями
+function setOptionsIntoSelects() {
   function genresOptionFill(property, propertyArray) {
-    let querySelectorId = `#${property}Sel`;
-    let selectElement = document.querySelector(querySelectorId);
+    const querySelectorId = `#${property}-sel`;
+    const selectElement = document.querySelector(querySelectorId);
 
-    for (let prop in propertyArray) {
+    for (const prop in propertyArray) {
       selectElement.options[selectElement.options.length] = new Option(
         propertyArray[prop],
-        prop
+        prop,
       );
     }
   }
+  genresOptionFill("genre", movieGenres);
+  genresOptionFill("languages", movieLaguages);
+  genresOptionFill("price", moviePrice);
+  document.querySelector("#price-sel").options[2].text = "Платно";
 }
 
 function isPropSelect(movie, property) {
-  let selectValue = document.querySelector(`#${property}Sel`).value;
+  const selectValue = document.querySelector(`#${property}-sel`).value;
 
-  if (selectValue === "selectTitle") return true;
+  if (selectValue === "select-title") return true;
 
   switch (property) {
     case "genre":
@@ -29,20 +36,22 @@ function isPropSelect(movie, property) {
       return movies[movie].price.includes(moviePrice[selectValue]);
     case "languages":
       return movies[movie].languages.includes(movieLaguages[selectValue]);
+    default:
+      return false;
   }
 }
 
 function showMovieTitles() {
-  let moviesList = document.querySelector("#movieList");
+  const moviesList = document.querySelector("#movie-list");
   let movieDiv = "";
 
-  for (let movie in movies) {
+  for (const movie in movies) {
     if (
-      isPropSelect(movie, "genre") &&
-      isPropSelect(movie, "price") &&
-      isPropSelect(movie, "languages")
+      isPropSelect(movie, "genre")
+      && isPropSelect(movie, "price")
+      && isPropSelect(movie, "languages")
     ) {
-      let selectedMovie = movies[movie];
+      const selectedMovie = movies[movie];
 
       movieDiv += `<div class="movie-from-list">
       <span>
@@ -72,3 +81,5 @@ function showMovieTitles() {
   moviesList.innerHTML = movieDiv;
   movieDiv = "";
 }
+
+export { showMovieTitles, setOptionsIntoSelects };
