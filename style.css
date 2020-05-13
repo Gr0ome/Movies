@@ -24,10 +24,6 @@
   margin: 20px;
 }
 
-.select-button {
-  margin-top: 10px;
-}
-
 .select {
   margin-top: 10px;
 }
@@ -37,10 +33,10 @@
   padding: 15px;
 }
 
-.select-title {
-  background-color: rgba(255, 187, 0, 0.692);
-}
-
 .title-link {
   color: #fff;
+}
+
+.selects-div, .buttons-div {
+  margin-bottom: 40px;
 }

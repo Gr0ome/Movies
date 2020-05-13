@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-/* eslint-disable no-underscore-dangle */
 import {
   movieGenres,
   movieLaguages,
@@ -7,8 +6,11 @@ import {
   getMovies,
 } from "./data";
 
-class Movies {
+import { AllElements } from "../utils";
+
+class Movies extends AllElements {
   constructor(movies) {
+    super();
     this.movies = movies;
   }
 
@@ -17,13 +19,15 @@ class Movies {
 
     if (selectedValue === "select-title") return true;
 
+    const movie = this.movies[movieId];
+
     switch (property) {
       case "genre":
-        return this.movies[movieId].genre.includes(movieGenres[selectedValue]);
+        return movie.genre.includes(movieGenres[selectedValue]);
       case "price":
-        return this.movies[movieId].price.includes(moviePrice[selectedValue]);
+        return movie.price.includes(moviePrice[selectedValue]);
       case "languages":
-        return this.movies[movieId].languages.includes(movieLaguages[selectedValue]);
+        return movie.languages.includes(movieLaguages[selectedValue]);
       default:
         return false;
     }
@@ -62,10 +66,6 @@ class Movies {
     }
 
     return col;
-  }
-
-  render(containerId) {
-    document.querySelector(`#${containerId}`).innerHTML = this.getTemplate();
   }
 
   edit(id, data) {

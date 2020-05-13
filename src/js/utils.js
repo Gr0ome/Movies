@@ -3,4 +3,14 @@ function getRandomNumber(min, max) {
   return Math.floor(random);
 }
 
-export { getRandomNumber };
+class AllElements {
+  constructor(iDontKnowWhatINeedPutHere) {
+    this.WTF = iDontKnowWhatINeedPutHere;
+  }
+
+  render(containerId) {
+    document.querySelector(`#${containerId}`).innerHTML = this.getTemplate();
+  }
+}
+
+export { getRandomNumber, AllElements };

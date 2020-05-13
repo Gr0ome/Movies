@@ -18,5 +18,6 @@ rules: {
   "import/prefer-default-export": off,
   "no-restricted-syntax": off,
   "guard-for-in": off,  
+  "no-underscore-dangle": off,
  }
  

@@ -1,75 +1,81 @@
+import { movieGenres, movieLaguages, moviePrice } from "./data";
+import { AllElements } from "../utils";
+
 const newFilters = {
-  types:{
+  types: {
     buttons: {
+      submitButton: {
+        name: "submit",
+        class: "filter-button",
+        id: "submit-button",
+      },
       addButton: {
         name: "add",
-        class: "select-button",
+        class: "filter-button",
         id: "add-button",
       },
       deleteButton: {
         name: "delete",
-        class: "select-button",
+        class: "filter-button",
         id: "delete-button",
-      }, 
-      submitButton: {
-        name: "submit",
-        class: "select-button",
-        id: "submit-button",
       },
       editbutton: {
         name: "edit",
-        class: "select-button",
+        class: "filter-button",
         id: "edit-button",
-      }  
+      },
     },
-    selects: {    
+    selects: {
       genreSelect: {
         dataArray: movieGenres,
         name: "genre-select",
-        class: "select",
+        class: "filter-select",
         id: "genre-sel",
       },
       languagesSelect: {
         dataArray: movieLaguages,
         name: "languages-select",
-        class: "select",
+        class: "filter-select",
         id: "languages-sel",
       },
       priceSelect: {
         dataArray: moviePrice,
         name: "price-select",
-        class: "select",
+        class: "filter-select",
         id: "price-sel",
-      },    
+      },
     },
-  },  
-  additionalData :{
-    selectsNames : ["Жанр","Язык","Цена"],
-    buttonsNames : ["Добавить","Удалить","Выбрать","Корректировать"],
-  },  
+  },
+  additionalData: {
+    selectsNames: ["Жанр", "Язык", "Цена"],
+    buttonsNames: ["Выбрать", "Добавить", "Удалить", "Корректировать"],
+  },
 };
 
-class Filters {
+class Filters extends AllElements {
   constructor(filters) {
+    super();
     this.filters = filters;
-  }  
+  }
 
-  _genresOptionFill() {
+  _selectsOptionFill() {
     for (const selectName in this.filters.types.selects) {
       const select = this.filters.types.selects[selectName];
       const domElement = document.querySelector(`#${select.id}`);
 
-      for (const el in select.dataArray) {
-        domElement.options[domElement.options.length] = new Option(
-          select.dataArray[el],
-          el,
-        );
-      }      
+      for (const elementId in select.dataArray) {
+        let optionValue = select.dataArray[elementId];
+        if (optionValue === "$") {
+          optionValue = "Платно";
+        }
+        domElement.options[domElement.options.length] = new Option(optionValue, elementId);
+      }
     }
   }
 
   getTemplate() {
-    let selectHTML = "";
+    let selectHTML = "<div class=\"selects-div\">";
+
     const selectsToArray = Object.keys(this.filters.types.selects);
     const buttonsToArray = Object.keys(this.filters.types.buttons);
 
@@ -77,42 +83,35 @@ class Filters {
       const select = this.filters.types.selects[selectName];
       const selectIndex = selectsToArray.indexOf(selectName);
 
-      const selectHead = 
-      `<select class="${select.class}" 
+      const selectHead = `<p><select class="${select.class}" 
                name="${select.name}" 
                id="${select.id}">
        <option class="select-title" value="select-title">
           ${this.filters.additionalData.selectsNames[selectIndex]}
         </option>
-      </select>`;
+      </select></p>`;
 
-      selectHTML += selectHead;      
+      selectHTML += selectHead;
     }
+
+    selectHTML += "</div>";
+    selectHTML += "<div class=\"buttons-div\">";
 
     for (const buttonName in this.filters.types.buttons) {
       const button = this.filters.types.buttons[buttonName];
       const buttonIndex = buttonsToArray.indexOf(buttonName);
 
-      const buttonHTML = 
-      `<button class="${button.class}" id="${button.id}">
+      const buttonHTML = `<p><button class="${button.class}" id="${button.id}">
         ${this.filters.additionalData.buttonsNames[buttonIndex]}
-      </button>`;
+      </button></p>`;
 
-      selectHTML += buttonHTML;      
+      selectHTML += buttonHTML;
     }
-    
-    return selectHTML;
-  }
 
-  render(containerId) {
-    document.querySelector(`#${containerId}`).innerHTML = this.getTemplate();
+    selectHTML += "</div>";
+
+    return selectHTML;
   }
 }
 
-const allFilters = new Filters(newFilters);
-
-
-
-allFilters.render("filters-div");
-allFilters._genresOptionFill();
-
+export { Filters, newFilters };

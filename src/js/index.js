@@ -1,9 +1,12 @@
-import { setOptionsIntoSelects } from "./html-fill";
 import { Movies } from "./components/movies";
 import { getMovies } from "./components/data";
+import { Filters, newFilters } from "./components/filters";
 
-setOptionsIntoSelects();
+const allFilters = new Filters(newFilters);
 const allMovies = new Movies(getMovies(3));
+
+allFilters.render("filters-div");
+allFilters._selectsOptionFill();
 
 allMovies.render("movie-list");
 
@@ -25,12 +28,10 @@ function addMovieToMovies() {
   }
 }
 
-function pickButton() {
+function submitButton() {
   allMovies.render("movie-list");
 }
 
 document.querySelector("#delete-button").addEventListener("click", deleteMovieFromMovies);
-
-document.querySelector("#pick-button").addEventListener("click", pickButton);
-
+document.querySelector("#submit-button").addEventListener("click", submitButton);
 document.querySelector("#add-button").addEventListener("click", addMovieToMovies);
