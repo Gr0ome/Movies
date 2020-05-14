@@ -1,14 +1,14 @@
 import { Movies } from "./components/movies";
 import { getMovies } from "./components/data";
-import { Filters, newFilters } from "./components/filters";
+import { Filters, FILTER } from "./components/filters";
 
-const allFilters = new Filters(newFilters);
+const allFilters = new Filters(FILTER);
 const allMovies = new Movies(getMovies(3));
 
 allFilters.render("filters-div");
-allFilters._selectsOptionFill();
+allFilters.selectsOptionFill();
 
-allMovies.render("movie-list");
+allMovies.getAll();
 
 function deleteMovieFromMovies() {
   // eslint-disable-next-line no-alert
@@ -32,6 +32,14 @@ function submitButton() {
   allMovies.render("movie-list");
 }
 
+function getButton() {
+  // eslint-disable-next-line no-alert
+  const getId = +prompt("Укажите ID объектf", "");
+
+  allMovies.get(getId);
+}
+
 document.querySelector("#delete-button").addEventListener("click", deleteMovieFromMovies);
 document.querySelector("#submit-button").addEventListener("click", submitButton);
 document.querySelector("#add-button").addEventListener("click", addMovieToMovies);
+document.querySelector("#edit-button").addEventListener("click", getButton);

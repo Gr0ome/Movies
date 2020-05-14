@@ -6,9 +6,9 @@ import {
   getMovies,
 } from "./data";
 
-import { AllElements } from "../utils";
+import { Component } from "../utils";
 
-class Movies extends AllElements {
+class Movies extends Component {
   constructor(movies) {
     super();
     this.movies = movies;
@@ -33,6 +33,31 @@ class Movies extends AllElements {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  _getMovieRow(movie) {
+    if (movie === null) {
+      return "<p>Фильма с таким ID нет!</p>";
+    }
+    let row = "";
+
+    row = `<div class="movie-from-list">
+             <p>Название:
+               <a
+                 class="title-link"
+                 href="movie.html?id=${movie.id}" 
+                 title="Перейти к фильму">
+                 ${movie.name}                
+               </a>
+             </p>
+             <p>Цена: ${movie.price}</p>
+             <p>Рейтинг: ${movie.rating}</p>
+             <p>Продолжительность: ${movie.duration} мин.</p>
+             <p>Жанры: ${movie.genre}</p>
+           </div>`;
+
+    return row;
+  }
+
   getTemplate() {
     let col = "";
 
@@ -44,22 +69,7 @@ class Movies extends AllElements {
       ) {
         const selectedMovie = this.movies[movieId];
 
-        let row = "";
-
-        row = `<div class="movie-from-list">
-                 <p>Название:
-                   <a
-                     class="title-link"
-                     href="movie.html?id=${selectedMovie.id}" 
-                     title="Перейти к фильму">
-                     ${selectedMovie.name}                
-                   </a>
-                 </p>
-                 <p>Цена: ${selectedMovie.price}</p>
-                 <p>Рейтинг: ${selectedMovie.rating}</p>
-                 <p>Продолжительность: ${selectedMovie.duration} мин.</p>
-                 <p>Жанры: ${selectedMovie.genre}</p>
-               </div>`;
+        const row = this._getMovieRow(selectedMovie);
 
         col += row;
       }
@@ -90,6 +100,24 @@ class Movies extends AllElements {
 
       this.movies.push(movie);
     }
+  }
+
+  getAll() {
+    this.render("movie-list");
+  }
+
+  get(id) {
+    let movieById = null;
+
+    for (const movieIndex in this.movies) {
+      if (this.movies[movieIndex].id === id) {
+        movieById = this.movies[movieIndex];
+      }
+    }
+
+    const row = this._getMovieRow(movieById);
+
+    document.querySelector("#movie-list").innerHTML = row;
   }
 }
 

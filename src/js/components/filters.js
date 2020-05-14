@@ -1,7 +1,7 @@
 import { movieGenres, movieLaguages, moviePrice } from "./data";
-import { AllElements } from "../utils";
+import { Component } from "../utils";
 
-const newFilters = {
+const FILTER = {
   types: {
     buttons: {
       submitButton: {
@@ -52,13 +52,13 @@ const newFilters = {
   },
 };
 
-class Filters extends AllElements {
+class Filters extends Component {
   constructor(filters) {
     super();
     this.filters = filters;
   }
 
-  _selectsOptionFill() {
+  selectsOptionFill() {
     for (const selectName in this.filters.types.selects) {
       const select = this.filters.types.selects[selectName];
       const domElement = document.querySelector(`#${select.id}`);
@@ -74,10 +74,18 @@ class Filters extends AllElements {
   }
 
   getTemplate() {
+    const selectsHtml = this.getSelectsTemplate();
+    const buttonsHTML = this.getButtonsTemplate();
+
+    const filtersHTML = selectsHtml + buttonsHTML;
+
+    return filtersHTML;
+  }
+
+  getSelectsTemplate() {
     let selectHTML = "<div class=\"selects-div\">";
 
     const selectsToArray = Object.keys(this.filters.types.selects);
-    const buttonsToArray = Object.keys(this.filters.types.buttons);
 
     for (const selectName in this.filters.types.selects) {
       const select = this.filters.types.selects[selectName];
@@ -95,23 +103,29 @@ class Filters extends AllElements {
     }
 
     selectHTML += "</div>";
-    selectHTML += "<div class=\"buttons-div\">";
+
+    return selectHTML;
+  }
+
+  getButtonsTemplate() {
+    let buttonsHTML = "<div class=\"buttons-div\">";
+    const buttonsToArray = Object.keys(this.filters.types.buttons);
 
     for (const buttonName in this.filters.types.buttons) {
       const button = this.filters.types.buttons[buttonName];
       const buttonIndex = buttonsToArray.indexOf(buttonName);
 
-      const buttonHTML = `<p><button class="${button.class}" id="${button.id}">
+      const buttonHead = `<p><button class="${button.class}" id="${button.id}">
         ${this.filters.additionalData.buttonsNames[buttonIndex]}
       </button></p>`;
 
-      selectHTML += buttonHTML;
+      buttonsHTML += buttonHead;
     }
 
-    selectHTML += "</div>";
+    buttonsHTML += "</div>";
 
-    return selectHTML;
+    return buttonsHTML;
   }
 }
 
-export { Filters, newFilters };
+export { Filters, FILTER };
