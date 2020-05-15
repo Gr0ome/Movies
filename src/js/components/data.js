@@ -1,6 +1,4 @@
-import {
-  getRandomNumber,
-} from "./utils";
+import { getRandomNumber } from "../utils";
 
 const movieTitles = [
   "За деревьями",
@@ -186,11 +184,9 @@ function getMovies(moviesQuantity) {
   return movieArray;
 }
 
-const movies = getMovies(25);
-
 export {
   movieGenres,
   movieLaguages,
   moviePrice,
-  movies,
+  getMovies,
 };
