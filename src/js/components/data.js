@@ -1,4 +1,4 @@
-import { getRandomNumber } from "../utils";
+import { getRandomNumber } from "./utils";
 
 const movieTitles = [
   "За деревьями",

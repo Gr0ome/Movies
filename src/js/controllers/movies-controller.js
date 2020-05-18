@@ -17,6 +17,16 @@ class MoviesController {
 
     this.movieView.render("movie-list");
   }
+
+  addMovies(quantity) {
+    this.movieModel.addRandomMovies(quantity);
+
+    this.movieView.render("movie-list");
+  }
+
+  submit() {
+    this.movieView.render("movie-list");
+  }
 }
 
 export { MoviesController };

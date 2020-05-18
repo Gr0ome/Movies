@@ -18,10 +18,23 @@ class FiltersController extends MoviesController {
   }
 
   _setHandlers() {
-    this.filtersView.setDeleteHandler(() => {
+    this.filtersView.setHandler("delete", () => {
       const deleteIndex = +prompt("Укажите ID удаляемого объекта", "");
 
       this.delete(deleteIndex);
+    });
+
+    this.filtersView.setHandler("add", () => {
+    // eslint-disable-next-line no-alert
+      const addQuantity = +prompt("Укажите сколько объектов добавить", "0");
+
+      if (addQuantity > 0) {
+        this.addMovies(addQuantity);
+      }
+    });
+
+    this.filtersView.setHandler("submit", () => {
+      this.submit();
     });
   }
 }

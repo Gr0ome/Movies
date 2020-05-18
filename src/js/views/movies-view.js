@@ -4,7 +4,7 @@ import {
   moviePrice,
 } from "../components/data";
 
-import { Component } from "../utils";
+import { Component } from "../components/utils";
 
 class MoviesView extends Component {
   constructor(movies) {

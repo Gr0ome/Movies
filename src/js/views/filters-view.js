@@ -1,4 +1,4 @@
-import { Component } from "../utils";
+import { Component } from "../components/utils";
 
 class FiltersView extends Component {
   constructor(filters) {
@@ -76,14 +76,8 @@ class FiltersView extends Component {
     return buttonsHTML;
   }
 
-  setDeleteHandler(handler) {
-    const button = this.document.querySelector("#delete-button");
-
-    button.addEventListener("click", handler);
-  }
-
-  setAddHandler(handler) {
-    const button = this.document.querySelector("#add-button");
+  setHandler(action, handler) {
+    const button = this.document.querySelector(`#${action}-button`);
 
     button.addEventListener("click", handler);
   }
