@@ -1,14 +1,12 @@
-/* eslint-disable no-console */
 import {
   movieGenres,
   movieLaguages,
   moviePrice,
-  getMovies,
-} from "./data";
+} from "../components/data";
 
 import { Component } from "../utils";
 
-class Movies extends Component {
+class MoviesView extends Component {
   constructor(movies) {
     super();
     this.movies = movies;
@@ -77,50 +75,6 @@ class Movies extends Component {
 
     return col;
   }
-
-  edit(id, data) {
-    const index = this.movies.findIndex((movie) => movie.id === id);
-
-    this.movies[index] = Object.assign(this.movies[index], data);
-  }
-
-  delete(id) {
-    const index = this.movies.findIndex((movie) => movie.id === id);
-
-    this.movies.splice(index, 1);
-  }
-
-  addRandomMovies(quantity) {
-    const newMovies = getMovies(quantity);
-
-    for (const movieIndex in newMovies) {
-      const movie = newMovies[movieIndex];
-
-      movie.id = this.movies.length;
-
-      this.movies.push(movie);
-    }
-  }
-
-  getAll() {
-    this.render("movie-list");
-  }
-
-  get(id) {
-    let movieById = null;
-
-    for (const movieIndex in this.movies) {
-      if (this.movies[movieIndex].id === id) {
-        movieById = this.movies[movieIndex];
-      }
-    }
-
-    const row = this._getMovieRow(movieById);
-
-    document.querySelector("#movie-list").innerHTML = row;
-  }
 }
 
-export {
-  Movies,
-};
+export { MoviesView };

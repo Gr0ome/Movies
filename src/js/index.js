@@ -1,45 +1,45 @@
-import { Movies } from "./components/movies";
-import { getMovies } from "./components/data";
-import { Filters, FILTER } from "./components/filters";
+import { MoviesController } from "./controllers/movies-controller";
+import { FiltersController } from "./controllers/filters-controller";
 
-const allFilters = new Filters(FILTER);
-const allMovies = new Movies(getMovies(3));
+const movies = new MoviesController();
+const filters = new FiltersController();
 
-allFilters.render("filters-div");
-allFilters.selectsOptionFill();
+filters.render("filters-div");
+filters.selectsOptionFill();
 
-allMovies.getAll();
+movies.init();
 
-function deleteMovieFromMovies() {
-  // eslint-disable-next-line no-alert
-  const deleteIndex = +prompt("Укажите ID удаляемого объекта", "");
+// function deleteMovieFromMovies() {
+//   // eslint-disable-next-line no-alert
+//   const deleteIndex = +prompt("Укажите ID удаляемого объекта", "");
 
-  allMovies.delete(deleteIndex);
-  allMovies.render("movie-list");
-}
+//   movies.delete(deleteIndex);
+//   movies.render("movie-list");
+// }
 
-function addMovieToMovies() {
-  // eslint-disable-next-line no-alert
-  const deleteIndex = +prompt("Укажите сколько объектов добавить", "0");
+// function addMovieToMovies() {
+//   // eslint-disable-next-line no-alert
+//   const deleteIndex = +prompt("Укажите сколько объектов добавить", "0");
 
-  if (deleteIndex > 0) {
-    allMovies.addRandomMovies(deleteIndex);
-    allMovies.render("movie-list");
-  }
-}
+//   if (deleteIndex > 0) {
+//     movies.addRandomMovies(deleteIndex);
+//     movies.render("movie-list");
+//   }
+// }
 
-function submitButton() {
-  allMovies.render("movie-list");
-}
+// function submitButton() {
+//   movies.render("movie-list");
+// }
 
-function getButton() {
-  // eslint-disable-next-line no-alert
-  const getId = +prompt("Укажите ID объектf", "");
+// function getButton() {
+//   // eslint-disable-next-line no-alert
+//   const getId = +prompt("Укажите ID объектf", "");
 
-  allMovies.get(getId);
-}
+//   // eslint-disable-next-line no-console
+//   console.log(movies.get(getId));
+// }
 
-document.querySelector("#delete-button").addEventListener("click", deleteMovieFromMovies);
-document.querySelector("#submit-button").addEventListener("click", submitButton);
-document.querySelector("#add-button").addEventListener("click", addMovieToMovies);
-document.querySelector("#edit-button").addEventListener("click", getButton);
+// // document.querySelector("#delete-button").addEventListener("click", deleteMovieFromMovies);
+// document.querySelector("#submit-button").addEventListener("click", submitButton);
+// document.querySelector("#add-button").addEventListener("click", addMovieToMovies);
+// document.querySelector("#edit-button").addEventListener("click", getButton);

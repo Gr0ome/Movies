@@ -184,9 +184,61 @@ function getMovies(moviesQuantity) {
   return movieArray;
 }
 
+const FILTER = {
+  types: {
+    buttons: {
+      submitButton: {
+        name: "submit",
+        class: "filter-button",
+        id: "submit-button",
+      },
+      addButton: {
+        name: "add",
+        class: "filter-button",
+        id: "add-button",
+      },
+      deleteButton: {
+        name: "delete",
+        class: "filter-button",
+        id: "delete-button",
+      },
+      editbutton: {
+        name: "edit",
+        class: "filter-button",
+        id: "edit-button",
+      },
+    },
+    selects: {
+      genreSelect: {
+        dataArray: movieGenres,
+        name: "genre-select",
+        class: "filter-select",
+        id: "genre-sel",
+      },
+      languagesSelect: {
+        dataArray: movieLaguages,
+        name: "languages-select",
+        class: "filter-select",
+        id: "languages-sel",
+      },
+      priceSelect: {
+        dataArray: moviePrice,
+        name: "price-select",
+        class: "filter-select",
+        id: "price-sel",
+      },
+    },
+  },
+  additionalData: {
+    selectsNames: ["Жанр", "Язык", "Цена"],
+    buttonsNames: ["Выбрать", "Добавить", "Удалить", "Корректировать"],
+  },
+};
+
 export {
   movieGenres,
   movieLaguages,
   moviePrice,
   getMovies,
+  FILTER,
 };
