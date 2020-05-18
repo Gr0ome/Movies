@@ -4,9 +4,7 @@ import { FiltersController } from "./controllers/filters-controller";
 const movies = new MoviesController();
 const filters = new FiltersController();
 
-filters.render("filters-div");
-filters.selectsOptionFill();
-
+filters.init();
 movies.init();
 
 // function deleteMovieFromMovies() {

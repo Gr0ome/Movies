@@ -1,10 +1,13 @@
-class FiltersView {
+import { Component } from "../utils";
+
+class FiltersView extends Component {
   constructor(filters) {
+    super();
     this.filters = filters;
     this.document = document;
   }
 
-  selectsOptionFill() {
+  _selectsOptionFill() {
     for (const selectName in this.filters.types.selects) {
       const select = this.filters.types.selects[selectName];
       const domElement = document.querySelector(`#${select.id}`);
@@ -20,15 +23,15 @@ class FiltersView {
   }
 
   getTemplate() {
-    const selectsHtml = this.getSelectsTemplate();
-    const buttonsHTML = this.getButtonsTemplate();
+    const selectsHtml = this._getSelectsTemplate();
+    const buttonsHTML = this._getButtonsTemplate();
 
     const filtersHTML = selectsHtml + buttonsHTML;
 
     return filtersHTML;
   }
 
-  getSelectsTemplate() {
+  _getSelectsTemplate() {
     let selectHTML = "<div class=\"selects-div\">";
 
     const selectsToArray = Object.keys(this.filters.types.selects);
@@ -53,7 +56,7 @@ class FiltersView {
     return selectHTML;
   }
 
-  getButtonsTemplate() {
+  _getButtonsTemplate() {
     let buttonsHTML = "<div class=\"buttons-div\">";
     const buttonsToArray = Object.keys(this.filters.types.buttons);
 
@@ -75,6 +78,12 @@ class FiltersView {
 
   setDeleteHandler(handler) {
     const button = this.document.querySelector("#delete-button");
+
+    button.addEventListener("click", handler);
+  }
+
+  setAddHandler(handler) {
+    const button = this.document.querySelector("#add-button");
 
     button.addEventListener("click", handler);
   }

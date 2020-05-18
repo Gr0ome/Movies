@@ -1,31 +1,28 @@
 import { FiltersModel } from "../models/filters-model";
 import { FILTER } from "../components/data";
 import { FiltersView } from "../views/filters-view";
+import { MoviesController } from "./movies-controller";
 
-class FiltersController {
+class FiltersController extends MoviesController {
   constructor() {
-    this.model = new FiltersModel(FILTER);
-    this.view = new FiltersView(this.model);
+    super();
+    this.filtersModel = new FiltersModel(FILTER);
+    this.filtersView = new FiltersView(FILTER);
   }
 
   init() {
-    this.view.render("movie-list");
+    this.filtersView.render("filters-div");
+    this.filtersView._selectsOptionFill();
 
     this._setHandlers();
   }
 
   _setHandlers() {
-    this.view.setDeleteHandler(() => {
+    this.filtersView.setDeleteHandler(() => {
       const deleteIndex = +prompt("Укажите ID удаляемого объекта", "");
 
       this.delete(deleteIndex);
     });
-  }
-
-  delete(id) {
-    this.model.delete(id);
-
-    this.view.render("movie-list");
   }
 }
 

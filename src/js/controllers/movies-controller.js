@@ -4,28 +4,18 @@ import { getMovies } from "../components/data";
 
 class MoviesController {
   constructor() {
-    this.model = new MoviesModel(getMovies(3));
-    this.view = new MoviesView(this.model.movies);
+    this.movieModel = new MoviesModel(getMovies(3));
+    this.movieView = new MoviesView(this.movieModel.movies);
   }
 
   init() {
-    this.view.render("movie-list");
-
-    this._setHandlers();
-  }
-
-  _setHandlers() {
-    this.view.setDeleteHandler(() => {
-      const deleteIndex = +prompt("Укажите ID удаляемого объекта", "");
-
-      this.delete(deleteIndex);
-    });
+    this.movieView.render("movie-list");
   }
 
   delete(id) {
-    this.model.delete(id);
+    this.movieModel.delete(id);
 
-    this.view.render("movie-list");
+    this.movieView.render("movie-list");
   }
 }
 
