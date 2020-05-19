@@ -187,41 +187,41 @@ function getMovies(moviesQuantity) {
 const FILTER = {
   types: {
     buttons: {
-      submitButton: {
+      submit: {
         name: "submit",
         class: "filter-button",
         id: "submit-button",
       },
-      addButton: {
+      add: {
         name: "add",
         class: "filter-button",
         id: "add-button",
       },
-      deleteButton: {
+      delete: {
         name: "delete",
         class: "filter-button",
         id: "delete-button",
       },
-      editbutton: {
+      edit: {
         name: "edit",
         class: "filter-button",
         id: "edit-button",
       },
     },
     selects: {
-      genreSelect: {
+      genre: {
         dataArray: movieGenres,
         name: "genre-select",
         class: "filter-select",
         id: "genre-sel",
       },
-      languagesSelect: {
+      languages: {
         dataArray: movieLaguages,
         name: "languages-select",
         class: "filter-select",
         id: "languages-sel",
       },
-      priceSelect: {
+      price: {
         dataArray: moviePrice,
         name: "price-select",
         class: "filter-select",

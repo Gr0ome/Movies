@@ -4,28 +4,28 @@ import { getMovies } from "../components/data";
 
 class MoviesController {
   constructor() {
-    this.movieModel = new MoviesModel(getMovies(3));
-    this.movieView = new MoviesView(this.movieModel.movies);
+    this.moviesModel = new MoviesModel(getMovies(3));
+    this.moviesView = new MoviesView(this.moviesModel.movies);
   }
 
   init() {
-    this.movieView.render("movie-list");
+    this.moviesView.render("movie-list");
   }
 
   delete(id) {
-    this.movieModel.delete(id);
+    this.moviesModel.delete(id);
 
-    this.movieView.render("movie-list");
+    this.moviesView.render("movie-list");
   }
 
   addMovies(quantity) {
-    this.movieModel.addRandomMovies(quantity);
+    this.moviesModel.addRandomMovies(quantity);
 
-    this.movieView.render("movie-list");
+    this.moviesView.render("movie-list");
   }
 
   submit() {
-    this.movieView.render("movie-list");
+    this.moviesView.render("movie-list");
   }
 }
 

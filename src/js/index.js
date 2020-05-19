@@ -1,11 +1,8 @@
-import { MoviesController } from "./controllers/movies-controller";
-import { FiltersController } from "./controllers/filters-controller";
+import { PageController } from "./controllers/page-controller";
 
-const movies = new MoviesController();
-const filters = new FiltersController();
+const page = new PageController();
 
-filters.init();
-movies.init();
+page.init();
 
 // function getButton() {
 //   // eslint-disable-next-line no-alert

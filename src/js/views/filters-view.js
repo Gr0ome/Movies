@@ -4,7 +4,6 @@ class FiltersView extends Component {
   constructor(filters) {
     super();
     this.filters = filters;
-    this.document = document;
   }
 
   _selectsOptionFill() {
@@ -76,8 +75,9 @@ class FiltersView extends Component {
     return buttonsHTML;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   setHandler(action, handler) {
-    const button = this.document.querySelector(`#${action}-button`);
+    const button = document.querySelector(`#${action}-button`);
 
     button.addEventListener("click", handler);
   }

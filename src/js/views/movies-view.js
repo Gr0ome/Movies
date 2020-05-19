@@ -40,12 +40,10 @@ class MoviesView extends Component {
 
     row = `<div class="movie-from-list">
              <p>Название:
-               <a
-                 class="title-link"
-                 href="movie.html?id=${movie.id}" 
-                 title="Перейти к фильму">
-                 ${movie.name}                
-               </a>
+                <input type="button" 
+                       class="title-link title-chk" 
+                       id="movie-${movie.id}" 
+                       value="${movie.name}" />
              </p>
              <p>Цена: ${movie.price}</p>
              <p>Рейтинг: ${movie.rating}</p>
@@ -74,6 +72,13 @@ class MoviesView extends Component {
     }
 
     return col;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  setMovieLinkHandler(handler) {
+    const button = document.querySelector("#movie-list");
+
+    button.addEventListener("click", handler);
   }
 }
 
