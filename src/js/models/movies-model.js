@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { getMovies } from "../components/data";
+import { getMovies } from "../common/data";
 
 class MoviesModel {
   constructor(movies) {
