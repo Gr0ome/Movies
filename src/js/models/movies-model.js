@@ -36,11 +36,6 @@ class MoviesModel {
   get(id) {
     const movieById = this.movies.find((movie) => movie.id === id);
 
-    if (!movieById) {
-      // eslint-disable-next-line no-alert
-      alert("Фильма с таким ID не существует!");
-    }
-
     return movieById;
   }
 }

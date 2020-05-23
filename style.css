@@ -31,12 +31,26 @@
 .movie-from-list {
   border: 1px solid goldenrod;
   padding: 15px;
+  font-family: Gill Sans, sans-serif;
+  font-size: medium;
 }
 
 .title-link {
-  color: #fff;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  color: #fff;  
+  font-family: Gill Sans, sans-serif;
+  font-size: large;
 }
 
 .selects-div, .buttons-div {
   margin-bottom: 40px;
+}
+
+.hidden {
+  display: none;
+}
+
+.title-chk {
+  font-size: larger;
 }
