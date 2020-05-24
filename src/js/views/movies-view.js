@@ -2,11 +2,11 @@ import {
   movieGenres,
   movieLaguages,
   moviePrice,
-} from "../components/data";
+} from "../common/data";
 
-import { Component } from "../components/utils";
+import { AbstractComponent } from "../common/abstract-component";
 
-class MoviesView extends Component {
+class MoviesView extends AbstractComponent {
   constructor(movies) {
     super();
     this.movies = movies;
@@ -42,6 +42,7 @@ class MoviesView extends Component {
              <p>Название:
                 <input type="button" 
                        class="title-link title-chk" 
+                       data-movie-id="${movie.id}"
                        id="movie-${movie.id}" 
                        value="${movie.name}" />
              </p>

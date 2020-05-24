@@ -1,6 +1,6 @@
-import { Component } from "../components/utils";
+import { AbstractComponent } from "../common/abstract-component";
 
-class FiltersView extends Component {
+class FiltersView extends AbstractComponent {
   constructor(filters) {
     super();
     this.filters = filters;

@@ -1,14 +1,23 @@
 /* eslint-disable no-console */
 import { MoviesController } from "./movies-controller";
-// import { MovieController } from "./movie-controller";
+import { MovieController } from "./movie-controller";
 import { FiltersController } from "./filters-controller";
+import { AbstractComponent } from "../common/abstract-component";
 
-class PageController {
+class PageController extends AbstractComponent {
   constructor() {
+    super();
     this.moviesController = new MoviesController();
     this.filtersController = new FiltersController();
 
-    this.moviesController.moviesView.setMovieLinkHandler(this._one1Movie);
+    this.oneMovie = document.querySelector("#one-movie");
+    this.movieList = document.querySelector("#movie-list");
+
+    this.currentViewMode = "list";
+
+    this.moviesController.moviesView.setMovieLinkHandler((event) => {
+      this._oneMovie(event);
+    });
   }
 
   init() {
@@ -17,17 +26,47 @@ class PageController {
   }
 
   _oneMovie(event) {
-    const classListValueArray = event.target.classList.value.split(" ");
-    const movieId = event.target.id.replace("movie-", "");
+    const { movieId } = event.target.dataset;
+    this.currentViewMode = "single";
 
-    if (classListValueArray.includes("title-link")) {
-      this.oneMovie = document.querySelector("#one-movie");
-      const movieList = document.querySelector("#movie-list");
+    if (event.target.classList.contains("title-link")) {
+      if (this.idCache !== movieId) {
+        this.idCache = movieId;
 
-      this.oneMovie.innerHTML = `<p>${movieId}</p>`;
+        const movie = this.moviesController.moviesModel.get(movieId);
 
-      this.oneMovie.classList.remove("hidden");
-      movieList.classList.add("hidden");
+        this.movieController = new MovieController(movie);
+
+        const recTitles = this.getRecMovies(this.movieController.movieModel.movie.recommended);
+        this.movieController.movieView._getRecommendedMovies(recTitles);
+
+        this.movieController.movieView.render("#one-movie");
+
+        document.querySelector("#movie-to-list").addEventListener("click", () => {
+          this.currentViewMode = "list";
+          this.toggleModeView(this.currentViewMode);
+        });
+      }
+
+      this.toggleModeView(this.currentViewMode);
+    }
+  }
+
+  getRecMovies(recommendedList) {
+    // eslint-disable-next-line max-len
+    const recommendedArray = this.moviesController.moviesModel.movies.filter((movie) => recommendedList.includes(movie.id));
+    const recommendedTitles = recommendedArray.map((movie) => movie.name);
+
+    return recommendedTitles;
+  }
+
+  toggleModeView() {
+    if (this.currentViewMode === "single") {
+      this.show(this.oneMovie);
+      this.hide(this.movieList);
+    } else {
+      this.hide(this.oneMovie);
+      this.show(this.movieList);
     }
   }
 }

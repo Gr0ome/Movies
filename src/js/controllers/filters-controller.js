@@ -1,5 +1,5 @@
 import { FiltersModel } from "../models/filters-model";
-import { FILTER } from "../components/data";
+import { FILTER } from "../common/data";
 import { FiltersView } from "../views/filters-view";
 import { MoviesController } from "./movies-controller";
 
@@ -11,7 +11,7 @@ class FiltersController extends MoviesController {
   }
 
   init() {
-    this.filtersView.render("filters-div");
+    this.filtersView.render("#filters-div");
     this.filtersView._selectsOptionFill();
 
     this._setHandlers();

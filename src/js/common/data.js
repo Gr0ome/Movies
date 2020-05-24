@@ -50,48 +50,49 @@ const moviePrice = ["Подписка", "$", "Бесплатно"];
 const actors = [
   {
     name: "Tom Hardy",
-    photoUrl: "photo.url",
+    photoUrl: "src/img/actors/Hardy.jpg",
   },
   {
     name: "Leonardo DiCaprio",
-    photoUrl: "photo.url",
+    photoUrl: "src/img/actors/DiCaprio.jpg",
   },
   {
     name: "Matthew McConaughey",
-    photoUrl: "photo.url",
+    photoUrl: "src/img/actors/McConaughey.jpg",
   },
   {
     name: "Ryan Reynolds",
-    photoUrl: "photo.url",
+    photoUrl: "src/img/actors/Reynolds.jpg",
   },
   {
     name: "Christian Bale",
-    photoUrl: "photo.url",
+    photoUrl: "src/img/actors/Bale.jpg",
   },
   {
     name: "Hugh Jackman",
-    photoUrl: "photo.url",
+    photoUrl: "src/img/actors/Jackman.jpg",
   },
   {
     name: "Mark Wahlberg",
-    photoUrl: "photo.url",
+    photoUrl: "src/img/actors/Wahlberg.jpg",
   },
   {
     name: "James McAvoy",
-    photoUrl: "photo.url",
+    photoUrl: "src/img/actors/McAvoy.jpg",
   },
   {
     name: "Scarlett Johansson",
-    photoUrl: "photo.url",
+    photoUrl: "src/img/actors/Johansson.jpg",
   },
   {
     name: "Natalie Portman",
-    photoUrl: "photo.url",
+    photoUrl: "src/img/actors/Portman.jpg",
   },
 ];
 
 const RULES = {
   MOVIE: {
+    IMG: "src/img/movie.jpg",
     MAX: {
       QUANTITY: 25,
       PRICE: 1000,
@@ -146,6 +147,7 @@ function Movie(movie) {
   this.recommended = movie.recommended;
   this.reviews = movie.reviews;
   this.videoSrc = movie.videoSrc;
+  this.posterSrc = movie.posterSrc;
 }
 
 function getRandomMovie(i) {
@@ -158,11 +160,12 @@ function getRandomMovie(i) {
     genre: setArrayFromArray(getRandomNumber(1, 4), movieGenres),
     description: "Описание",
     languages: setArrayFromArray(getRandomNumber(1, 3), movieLaguages),
-    actors: setArrayFromArray(getRandomNumber(0, RULES.MOVIE.MAX.ACTORS_QUANTITY - 1), actors),
+    actors: setArrayFromArray(getRandomNumber(1, RULES.MOVIE.MAX.ACTORS_QUANTITY - 1), actors),
     videoQuality: movieQuality[getRandomNumber(0, movieQuality.length - 1)],
     recommended: setNumberArray(5),
     reviews: setArrayFromArray(getRandomNumber(1, 4), movieComments),
     videoSrc: "video.url",
+    posterSrc: RULES.MOVIE.IMG,
   };
 
   if (randomMovie.price === "$") {

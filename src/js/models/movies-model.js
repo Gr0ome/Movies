@@ -14,8 +14,9 @@ class MoviesModel {
 
   delete(id) {
     const index = this.movies.findIndex((movie) => movie.id === id);
-
-    this.movies.splice(index, 1);
+    if (index !== -1) {
+      this.movies.splice(index, 1);
+    }
   }
 
   addRandomMovies(quantity) {
@@ -34,8 +35,7 @@ class MoviesModel {
   }
 
   get(id) {
-    const movieById = this.movies.find((movie) => movie.id === id);
-
+    const movieById = this.movies.find((movie) => movie.id === +id);
     return movieById;
   }
 }

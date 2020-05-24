@@ -3,14 +3,4 @@ function getRandomNumber(min, max) {
   return Math.floor(random);
 }
 
-class Component {
-  render(containerId) {
-    const DOMElement = document.querySelector(`#${containerId}`);
-
-    if (DOMElement) {
-      DOMElement.innerHTML = this.getTemplate();
-    }
-  }
-}
-
-export { getRandomNumber, Component };
+export { getRandomNumber };
