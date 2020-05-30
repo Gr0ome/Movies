@@ -3,7 +3,7 @@ import { AbstractComponent } from "../common/abstract-component";
 class FiltersView extends AbstractComponent {
   constructor(filters) {
     super();
-    this.filters = filters;
+    this.filters = filters.filters;
   }
 
   _selectsOptionFill() {

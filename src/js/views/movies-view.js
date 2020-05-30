@@ -31,11 +31,15 @@ class MoviesView extends AbstractComponent {
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
   _getMovieRow(movie) {
     if (movie === null) {
       return "<p>Фильма с таким ID нет!</p>";
     }
+
+    if (!isNaN(movie.price)) {
+      movie.price = `${movie.price}$`;
+    }
+
     let row = "";
 
     row = `<div class="movie-from-list">
@@ -75,7 +79,6 @@ class MoviesView extends AbstractComponent {
     return col;
   }
 
-  // eslint-disable-next-line class-methods-use-this
   setMovieLinkHandler(handler) {
     const button = document.querySelector("#movie-list");
 

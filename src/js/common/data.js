@@ -187,61 +187,9 @@ function getMovies(moviesQuantity) {
   return movieArray;
 }
 
-const FILTER = {
-  types: {
-    buttons: {
-      submit: {
-        name: "submit",
-        class: "filter-button",
-        id: "submit-button",
-      },
-      add: {
-        name: "add",
-        class: "filter-button",
-        id: "add-button",
-      },
-      delete: {
-        name: "delete",
-        class: "filter-button",
-        id: "delete-button",
-      },
-      edit: {
-        name: "edit",
-        class: "filter-button",
-        id: "edit-button",
-      },
-    },
-    selects: {
-      genre: {
-        dataArray: movieGenres,
-        name: "genre-select",
-        class: "filter-select",
-        id: "genre-sel",
-      },
-      languages: {
-        dataArray: movieLaguages,
-        name: "languages-select",
-        class: "filter-select",
-        id: "languages-sel",
-      },
-      price: {
-        dataArray: moviePrice,
-        name: "price-select",
-        class: "filter-select",
-        id: "price-sel",
-      },
-    },
-  },
-  additionalData: {
-    selectsNames: ["Жанр", "Язык", "Цена"],
-    buttonsNames: ["Выбрать", "Добавить", "Удалить", "Корректировать"],
-  },
-};
-
 export {
   movieGenres,
   movieLaguages,
   moviePrice,
   getMovies,
-  FILTER,
 };

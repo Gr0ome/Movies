@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
-import { getMovies } from "../common/data";
+import { Api } from "../common/api";
 
 class MoviesModel {
-  constructor(movies) {
-    this.movies = movies;
+  constructor() {
+    this.api = new Api("http://localhost:4433/api/movies/");
   }
 
   edit(id, data) {
@@ -12,34 +12,30 @@ class MoviesModel {
     this.movies[index] = Object.assign(this.movies[index], data);
   }
 
-  delete(id) {
-    const index = this.movies.findIndex((movie) => movie.id === id);
-    if (index !== -1) {
-      this.movies.splice(index, 1);
+  remove(id, cb) {
+    if (this.movies.find((movie) => movie.id === +id)) {
+      this.api.remove(id, (movies) => {
+        this.movies = movies;
+        cb();
+      });
+      return `Фильм с ID ${id} удалён!`;
     }
+
+    return `Нет фильма с ID "${id}"!`;
   }
 
-  addRandomMovies(quantity) {
-    const newMovies = getMovies(quantity);
-
-    newMovies.forEach((movie) => {
-      // eslint-disable-next-line no-param-reassign
-      movie.id = this.movies.length;
-
-      this.movies.push(movie);
+  getAll(cb) {
+    this.api.getAll((movies) => {
+      this.movies = movies;
+      cb();
     });
   }
 
-  getAll() {
-    return this.movies;
-  }
-
   get(id) {
-    const movieById = this.movies.find((movie) => movie.id === +id);
-    return movieById;
+    this.api.get(id, (movie) => {
+      console.log(movie);
+    });
   }
 }
 
-export {
-  MoviesModel,
-};
+export { MoviesModel };

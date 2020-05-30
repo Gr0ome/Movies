@@ -1,30 +1,30 @@
 import { MoviesModel } from "../models/movies-model";
 import { MoviesView } from "../views/movies-view";
-import { getMovies } from "../common/data";
 
 class MoviesController {
   constructor() {
-    this.moviesModel = new MoviesModel(getMovies(7));
+    this.moviesModel = new MoviesModel();
     this.moviesView = new MoviesView(this.moviesModel.movies);
   }
 
+  _moviesViewRewrite() {
+    this.moviesView.movies = this.moviesModel.movies;
+    this.moviesView.render("#movie-list");
+  }
+
   init() {
-    this.moviesView.render("#movie-list");
+    this.moviesModel.getAll(() => {
+      this._moviesViewRewrite();
+    });
   }
 
-  delete(id) {
-    this.moviesModel.delete(id);
-
-    this.moviesView.render("#movie-list");
+  remove(id) {
+    return this.moviesModel.remove(id, () => {
+      this._moviesViewRewrite();
+    });
   }
 
-  addMovies(quantity) {
-    this.moviesModel.addRandomMovies(quantity);
-
-    this.moviesView.render("#movie-list");
-  }
-
-  submit() {
+  pick() {
     this.moviesView.render("#movie-list");
   }
 }

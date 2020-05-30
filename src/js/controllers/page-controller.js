@@ -14,18 +14,27 @@ class PageController extends AbstractComponent {
     this.movieList = document.querySelector("#movie-list");
 
     this.currentViewMode = "list";
+  }
+
+  init() {
+    this.filtersController.init();
+    this.moviesController.init();
+
+    this.filtersController.setDeleteHandler(() => {
+      const deleteIndex = +prompt("Укажите ID удаляемого объекта", "");
+      alert(this.moviesController.remove(deleteIndex));
+    });
+
+    this.filtersController.setPickHandler(() => {
+      this.moviesController.pick();
+    });
 
     this.moviesController.moviesView.setMovieLinkHandler((event) => {
       this._oneMovie(event);
     });
   }
 
-  init() {
-    this.filtersController.init();
-    this.moviesController.init();
-  }
-
-  _oneMovie(event) {
+  async _oneMovie(event) {
     const { movieId } = event.target.dataset;
     this.currentViewMode = "single";
 
@@ -33,12 +42,20 @@ class PageController extends AbstractComponent {
       if (this.idCache !== movieId) {
         this.idCache = movieId;
 
-        const movie = this.moviesController.moviesModel.get(movieId);
+        const promise = new Promise(() => {
+          this.moviesController.moviesModel.get(movieId);
+        });
+
+        const movie = await promise;
+        console.log(movie);
 
         this.movieController = new MovieController(movie);
 
-        const recTitles = this.getRecMovies(this.movieController.movieModel.movie.recommended);
-        this.movieController.movieView._getRecommendedMovies(recTitles);
+        const recommendedTitles = this.getRecommendedMovies(
+          this.movieController.movieModel.movie.recommended,
+        );
+
+        this.movieController.movieView._getRecommendedMovies(recommendedTitles);
 
         this.movieController.movieView.render("#one-movie");
 
@@ -52,7 +69,7 @@ class PageController extends AbstractComponent {
     }
   }
 
-  getRecMovies(recommendedList) {
+  getRecommendedMovies(recommendedList) {
     // eslint-disable-next-line max-len
     const recommendedArray = this.moviesController.moviesModel.movies.filter((movie) => recommendedList.includes(movie.id));
     const recommendedTitles = recommendedArray.map((movie) => movie.name);

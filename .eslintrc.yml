@@ -21,5 +21,8 @@ rules: {
   "no-underscore-dangle": off,
   "no-alert": off,
   "class-methods-use-this": off,
+  "no-restricted-globals": off,
+  "no-param-reassign": off,
+  
  }
  
