@@ -34,44 +34,29 @@ class PageController extends AbstractComponent {
     });
   }
 
-  async _oneMovie(event) {
-    const { movieId } = event.target.dataset;
-    this.currentViewMode = "single";
+  _oneMovieRender() {
+    console.log(this.movieController);
+    const recommendedTitles = this._getRecommendedMovies(
+      this.movieController.movieModel.movie.recommended,
+    );
 
-    if (event.target.classList.contains("title-link")) {
-      if (this.idCache !== movieId) {
-        this.idCache = movieId;
+    this.movieController.movieView._getRecommendedMovies(recommendedTitles);
 
-        const promise = new Promise(() => {
-          this.moviesController.moviesModel.get(movieId);
-        });
+    this.movieController.movieView.render("#one-movie");
 
-        const movie = await promise;
-        console.log(movie);
-
-        this.movieController = new MovieController(movie);
-
-        const recommendedTitles = this.getRecommendedMovies(
-          this.movieController.movieModel.movie.recommended,
-        );
-
-        this.movieController.movieView._getRecommendedMovies(recommendedTitles);
-
-        this.movieController.movieView.render("#one-movie");
-
-        document.querySelector("#movie-to-list").addEventListener("click", () => {
-          this.currentViewMode = "list";
-          this.toggleModeView(this.currentViewMode);
-        });
-      }
-
+    document.querySelector("#movie-to-list").addEventListener("click", () => {
+      this.currentViewMode = "list";
       this.toggleModeView(this.currentViewMode);
-    }
+    });
   }
 
-  getRecommendedMovies(recommendedList) {
-    // eslint-disable-next-line max-len
-    const recommendedArray = this.moviesController.moviesModel.movies.filter((movie) => recommendedList.includes(movie.id));
+  _getRecommendedMovies(recommendedList) {
+    const recommendedArray = this
+      .moviesController
+      .moviesModel
+      .movies
+      .filter((movie) => recommendedList.includes(movie.id));
+
     const recommendedTitles = recommendedArray.map((movie) => movie.name);
 
     return recommendedTitles;
@@ -84,6 +69,24 @@ class PageController extends AbstractComponent {
     } else {
       this.hide(this.oneMovie);
       this.show(this.movieList);
+    }
+  }
+
+  _oneMovie(event) {
+    const { movieId } = event.target.dataset;
+    this.currentViewMode = "single";
+
+    if (event.target.classList.contains("title-link")) {
+      if (this.idCache !== movieId) {
+        this.idCache = movieId;
+
+        this.moviesController.moviesModel.get(movieId, (movie) => {
+          this.movieController = new MovieController(movie);
+          this._oneMovieRender();
+        });
+      }
+
+      this.toggleModeView(this.currentViewMode);
     }
   }
 }

@@ -28,20 +28,26 @@ class MovieView extends AbstractComponent {
     if (this.movie === null) {
       return "<p>Фильма с таким ID нет!</p>";
     }
+
+    if (!isNaN(this.movie.price)) {
+      this.movie.price = `${this.movie.price}$`;
+    }
     let row = "";
 
-    row = "<div class=\"movie-from-list\">";
+    row = '<div class="movie-from-list">';
 
-    row += `
-    <img width="400" src="${this.movie.posterSrc}">
+    row += `    
     <p><b>Название:</b> ${this.movie.name}</p>
+    <video src="${this.movie.videoSrc}" controls width="720">
+      Sorry, your browser doesn't support embedded videos!
+    </video>
     <p><b>Цена:</b> ${this.movie.price}</p>
     <p><b>Рейтинг:</b> ${this.movie.rating}</p>
     <p><b>Продолжительность:</b> ${this.movie.duration} мин.</p>
     <p><b>Жанры:</b> ${this.movie.genre}</p>
     <p><b>Описание:</b> ${this.movie.description}</p>
     <p><b>Языки:</b> ${this.movie.languages}</p>    
-    <p><b>Качество видео:</b> ${this.movie.videoQuality}</p>
+    <p><b>Качество видео:</b> ${this.movie.videoQuality}</p>    
     <p><b>Рекомендации:</b> ${this.recommended}</p>`;
 
     row += `<p><b>Актёры:</b> <br> ${this._getActorsTable(this.movie.actors)}`;
@@ -49,7 +55,7 @@ class MovieView extends AbstractComponent {
     // <p>Отзывы: ${this.movie.reviews}</p>
     row += "</div>";
 
-    row += "<input type=\"button\" value=\"Назад\" style=\"margin: 20px\" id=\"movie-to-list\"></input>";
+    row += '<input type="button" value="Назад" style="margin: 20px" id="movie-to-list"></input>';
 
     return row;
   }

@@ -22,7 +22,8 @@ class Api {
   }
 
   get(id, cb) {
-    this.xhrRequest("get", cb, this.url, id);
+    const movieUrl = `${this.url}${id}`;
+    this.xhrRequest("get", cb, movieUrl);
   }
 
   update(id, data, cb) {

@@ -31,9 +31,9 @@ class MoviesModel {
     });
   }
 
-  get(id) {
+  get(id, cb) {
     this.api.get(id, (movie) => {
-      console.log(movie);
+      cb(movie);
     });
   }
 }

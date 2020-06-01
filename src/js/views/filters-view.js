@@ -31,7 +31,7 @@ class FiltersView extends AbstractComponent {
   }
 
   _getSelectsTemplate() {
-    let selectHTML = "<div class=\"selects-div\">";
+    let selectHTML = '<div class="selects-div">';
 
     const selectsToArray = Object.keys(this.filters.types.selects);
 
@@ -56,7 +56,7 @@ class FiltersView extends AbstractComponent {
   }
 
   _getButtonsTemplate() {
-    let buttonsHTML = "<div class=\"buttons-div\">";
+    let buttonsHTML = '<div class="buttons-div">';
     const buttonsToArray = Object.keys(this.filters.types.buttons);
 
     for (const buttonName in this.filters.types.buttons) {
