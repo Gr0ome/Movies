@@ -26,7 +26,10 @@ class PageController extends AbstractComponent {
     });
 
     this.filtersController.setPickHandler(() => {
-      this.moviesController.pick();
+      this.moviesController.pick(() => {
+        this.currentViewMode = "list";
+        this.toggleModeView(this.currentViewMode);
+      });
     });
 
     this.moviesController.moviesView.setMovieLinkHandler((event) => {
@@ -35,18 +38,26 @@ class PageController extends AbstractComponent {
   }
 
   _oneMovieRender() {
-    console.log(this.movieController);
-    const recommendedTitles = this._getRecommendedMovies(
+    const recommendedMovies = this._getRecommendedMovies(
       this.movieController.movieModel.movie.recommended,
     );
 
-    this.movieController.movieView._getRecommendedMovies(recommendedTitles);
+    this.movieController.movieView._getRecommendedMovies(recommendedMovies);
 
     this.movieController.movieView.render("#one-movie");
 
     document.querySelector("#movie-to-list").addEventListener("click", () => {
       this.currentViewMode = "list";
       this.toggleModeView(this.currentViewMode);
+    });
+
+    this.movieController.movieView.setMovieLinkHandler((evt) => {
+      this._oneMovie(evt);
+    });
+
+    this.movieController.movieView.setEditHandler(() => {
+      const popup = document.getElementById("myPopup");
+      popup.classList.add("show");
     });
   }
 
@@ -57,9 +68,7 @@ class PageController extends AbstractComponent {
       .movies
       .filter((movie) => recommendedList.includes(movie.id));
 
-    const recommendedTitles = recommendedArray.map((movie) => movie.name);
-
-    return recommendedTitles;
+    return recommendedArray;
   }
 
   toggleModeView() {

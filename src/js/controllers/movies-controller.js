@@ -24,8 +24,9 @@ class MoviesController {
     });
   }
 
-  pick() {
+  pick(cb) {
     this.moviesView.render("#movie-list");
+    cb();
   }
 }
 

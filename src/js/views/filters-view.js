@@ -75,7 +75,6 @@ class FiltersView extends AbstractComponent {
     return buttonsHTML;
   }
 
-  // eslint-disable-next-line class-methods-use-this
   setHandler(action, handler) {
     const button = document.querySelector(`#${action}-button`);
 
