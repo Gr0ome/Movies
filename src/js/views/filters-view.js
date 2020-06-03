@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { AbstractComponent } from "../common/abstract-component";
 
 class FiltersView extends AbstractComponent {
@@ -22,10 +23,10 @@ class FiltersView extends AbstractComponent {
   }
 
   getTemplate() {
-    const selectsHtml = this._getSelectsTemplate();
+    const selectsHTML = this._getSelectsTemplate();
     const buttonsHTML = this._getButtonsTemplate();
 
-    const filtersHTML = selectsHtml + buttonsHTML;
+    const filtersHTML = selectsHTML + buttonsHTML;
 
     return filtersHTML;
   }
@@ -39,13 +40,15 @@ class FiltersView extends AbstractComponent {
       const select = this.filters.types.selects[selectName];
       const selectIndex = selectsToArray.indexOf(selectName);
 
-      const selectHead = `<p><select class="${select.class}" 
+      const selectHead = `<p>
+        <select class="${select.class}" 
                name="${select.name}" 
-               id="${select.id}">
-       <option class="select-title" value="select-title">
-          ${this.filters.additionalData.selectsNames[selectIndex]}
-        </option>
-      </select></p>`;
+                id="${select.id}">
+          <option class="select-title" value="select-title">
+            ${this.filters.additionalData.selectsNames[selectIndex]}
+          </option>
+        </select>
+      </p>`;
 
       selectHTML += selectHead;
     }
@@ -63,9 +66,11 @@ class FiltersView extends AbstractComponent {
       const button = this.filters.types.buttons[buttonName];
       const buttonIndex = buttonsToArray.indexOf(buttonName);
 
-      const buttonHead = `<p><button class="${button.class}" id="${button.id}">
-        ${this.filters.additionalData.buttonsNames[buttonIndex]}
-      </button></p>`;
+      const buttonHead = `<p>
+        <button class="${button.class}" id="${button.id}">
+          ${this.filters.additionalData.buttonsNames[buttonIndex]}
+        </button>
+      </p>`;
 
       buttonsHTML += buttonHead;
     }

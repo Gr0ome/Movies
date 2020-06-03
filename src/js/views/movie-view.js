@@ -52,6 +52,53 @@ class MovieView extends AbstractComponent {
     return recommendedBlock;
   }
 
+  _getEditBlock(movie) {
+    const datalist = `<datalist id="datalist-price">
+                        <option value="Подписка">
+                        <option value="Платно">
+                        <option value="Бесплатно">
+                      </datalist>`;
+
+    let priceText = movie.price;
+    let editPriceClass = 'class="hidden"';
+
+    if (!isNaN(movie.price.slice(0, movie.price.indexOf("$")))) {
+      priceText = "Платно";
+      editPriceClass = "";
+    }
+
+    return `<div class="popup">Click    
+              ${datalist}        
+                <div class="popuptext" id="myPopup">
+                  <input type="hidden" id="edit-movie-id" value="${movie.id}"/>
+                  <p><label for="edit-movie-name">Название:</label>
+                  <input type="text" name="edit-name" id="edit-movie-name" value="${movie.name}" size="30"/>
+                  </p>
+                  <p id="p-price">
+                  <label>Цена</label>
+                  <input type="text" id="edit-movie-price-text" list="datalist-price" value="${priceText}"/>
+                  <input type="text" name="edit-price+" id="edit-movie-price" maxlength="4" size="1" ${editPriceClass} value="${movie.price}" placeholder="$"/>
+                  </p>
+                  <p><label for="edit-movie-duration">Продолжительность, минут(ы):</label>
+                  <input type="text" name="edit-duration" id="edit-movie-duration" value="${movie.duration}" maxlength="3" size="1"/>
+                  </p>
+                  <p><label for="edit-movie-genre">Жанры:</label>
+                  <input type="text" name="edit-genre" id="edit-movie-genre" value="${movie.genre}" size="30"/>
+                  </p>
+                  <p><label for="edit-movie-description">Описание:</label>                
+                  <textarea name="edit-description" id="edit-movie-description" class="description-textarea">${movie.description}</textarea>
+                  </p>
+                  <p><label for="edit-movie-languages">Языки:</label>
+                  <input type="text" name="edit-languages" id="edit-movie-languages" value="${movie.languages}" size="30"/>
+                  </p>
+                  <p><label for="edit-movie-videoQuality">Качество видео:</label>
+                  <input type="text" name="edit-videoQuality" id="edit-movie-videoQuality" value="${movie.videoQuality}" size="10"/>
+                  </p>
+                  <input type="button" value="Сохранить" style="margin: 20px" id="edit-save"/>
+                </div>
+            </div>`;
+  }
+
   getTemplate() {
     if (this.movie === null) {
       return "<p>Фильма с таким ID нет!</p>";
@@ -85,26 +132,7 @@ class MovieView extends AbstractComponent {
 
     row += '<input type="button" value="К списку фильмов" style="margin: 20px" id="movie-to-list"/>';
 
-    row += `<div class="popup">Click
-              <div class="popuptext" id="myPopup">
-                <input type="hidden" id="edit-movie-id" value="${this.movie.id}"/>
-                <span>Название:</span>
-                <input type="text" name="name" id="edit-movie-name" value="${this.movie.name}"/>
-                <span>Цена:</span>
-                <input type="text" name="name" id="edit-movie-price" value="${this.movie.price}"/>
-                <span>Продолжительность:</span>
-                <input type="text" name="name" id="edit-movie-duration" value="${this.movie.duration}"/>
-                <span>Жинры:</span>
-                <input type="text" name="name" id="edit-movie-genre" value="${this.movie.genre}"/>
-                <span>Описание:</span>
-                <input type="text" name="name" id="edit-movie-description" value="${this.movie.description}"/>
-                <span>Языки:</span>
-                <input type="text" name="name" id="edit-movie-languages" value="${this.movie.languages}"/>
-                <span>Качество видео:</span>
-                <input type="text" name="name" id="edit-movie-videoQuality" value="${this.movie.videoQuality}"/>
-                <button ></button>
-              </div>
-            </div>`;
+    row += this._getEditBlock(this.movie);
     return row;
   }
 
@@ -118,6 +146,12 @@ class MovieView extends AbstractComponent {
     const button = document.querySelector(".popup");
 
     button.addEventListener("click", handler);
+  }
+
+  setPriceDatalistHandler(handler) {
+    const datalist = document.querySelector("#edit-movie-price-text");
+
+    datalist.addEventListener("input", handler);
   }
 }
 

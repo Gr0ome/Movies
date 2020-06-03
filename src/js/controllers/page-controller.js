@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { MoviesController } from "./movies-controller";
 import { MovieController } from "./movie-controller";
 import { FiltersController } from "./filters-controller";
@@ -56,8 +55,17 @@ class PageController extends AbstractComponent {
     });
 
     this.movieController.movieView.setEditHandler(() => {
-      const popup = document.getElementById("myPopup");
+      const popup = document.querySelector("#myPopup");
       popup.classList.add("show");
+
+      this.movieController.movieView.setPriceDatalistHandler((evt) => {
+        if (evt.target.value === "Платно") {
+          const editPrice = document.querySelector("#edit-movie-price");
+
+          editPrice.classList.remove("hidden");
+          editPrice.value = "";
+        }
+      });
     });
   }
 
