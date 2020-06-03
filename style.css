@@ -44,6 +44,10 @@
   font-size: large;
 }
 
+.title-link:hover {
+  color: gold;
+}
+
 .selects-div, .buttons-div {
   margin-bottom: 40px;
 }
