@@ -24,6 +24,12 @@ class FiltersController {
       cb();
     });
   }
+
+  setAddHandler(cb) {
+    this.filtersView.setHandler("add", () => {
+      cb();
+    })
+  }
 }
 
 export { FiltersController };

@@ -42,14 +42,8 @@ class MoviesView extends AbstractComponent {
 
     let row = "";
 
-    row = `<div class="movie-from-list">
-             <p>Название:
-                <input type="button" 
-                       class="title-link title-chk" 
-                       data-movie-id="${movie.id}"
-                       id="movie-${movie.id}" 
-                       value="${movie.name}" />
-             </p>
+    row = `<div class="movie-from-list title-link" data-movie-id="${movie.id}">
+             <p>Название: <span class="title-chk">${movie.name}</span></p>
              <p>Цена: ${movie.price}</p>
              <p>Рейтинг: ${movie.rating}</p>
              <p>Продолжительность: ${movie.duration} мин.</p>

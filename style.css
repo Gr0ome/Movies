@@ -41,11 +41,16 @@
   background-color: rgba(0, 0, 0, 0);
   color: #fff;  
   font-family: Gill Sans, sans-serif;
-  font-size: large;
+  font-size: large;  
+  box-shadow: 0 0 5px 2px goldenrod;
 }
 
-.title-link:hover {
+.title-link:hover .title-chk {
   color: gold;
+}
+
+.title-link:hover, .filter-button {
+  cursor: pointer;
 }
 
 .selects-div, .buttons-div {
@@ -58,11 +63,6 @@
 
 .title-chk {
   font-size: larger;
-}
-
-table, tr {
-  border:1px solid gold;
-  border-collapse: collapse;
 }
 
 .popup {
@@ -109,4 +109,20 @@ table, tr {
 
 datalist {
   display: none;
+}
+
+ul#actors-ul {
+  list-style-type: none;
+}
+
+ul#actors-ul li {
+  display:inline;
+}
+
+#comments-block {
+  border: 1px solid gold;
+}
+
+.save {
+  box-shadow: 0 0 5px 2px goldenrod;
 }

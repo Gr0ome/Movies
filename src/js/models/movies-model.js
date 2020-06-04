@@ -6,10 +6,10 @@ class MoviesModel {
     this.api = new Api("http://localhost:4433/api/movies/");
   }
 
-  edit(id, data) {
-    const index = this.movies.findIndex((movie) => movie.id === id);
-
-    this.movies[index] = Object.assign(this.movies[index], data);
+  edit(id, data, cb) {
+    this.api.update(id, data, () => {
+      this.getAll(cb);
+    });
   }
 
   remove(id, cb) {

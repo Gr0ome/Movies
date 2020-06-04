@@ -28,6 +28,12 @@ class MoviesController {
     this.moviesView.render("#movie-list");
     cb();
   }
+
+  edit(id, data) {
+    this.moviesModel.edit(id, data, () => {
+      location.reload();
+    });
+  }
 }
 
 export { MoviesController };

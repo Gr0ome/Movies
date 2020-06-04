@@ -11,8 +11,8 @@ class MovieController {
     this.movieView.render("#one-movie");
   }
 
-  edit() {
-    this.movieView.render("#one-movie");
+  setEditHandler(handler) {
+    document.querySelector("#edit-save").addEventListener("click", handler);
   }
 }
 

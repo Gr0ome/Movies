@@ -1,4 +1,3 @@
-// В моём вариант этот класс вообще нужен?
 class FiltersModel {
   constructor(movieGenres, movieLaguages, moviePrice) {
     this.filters = {
@@ -18,11 +17,6 @@ class FiltersModel {
             name: "delete",
             class: "filter-button",
             id: "delete-button",
-          },
-          edit: {
-            name: "edit",
-            class: "filter-button",
-            id: "edit-button",
           },
         },
         selects: {

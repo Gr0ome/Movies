@@ -11,29 +11,29 @@ class MovieView extends AbstractComponent {
   }
 
   _getActorsTable(actorsList) {
-    let actorsTable = "<table><tr>";
+    let actorsTable = '<div><ul id=actors-ul>';
 
     for (const actorIndex in actorsList) {
       const actor = actorsList[actorIndex];
 
-      actorsTable += `<td><img width="50" heigth="100" src="${actor.photoUrl}" title="${actor.name}"></td>`;
+      actorsTable += `<li><img width="50" heigth="100" src="${actor.photoUrl}" title="${actor.name}"></li>`;
     }
 
-    actorsTable += "</tr></table>";
+    actorsTable += "</ul></div>";
 
     return actorsTable;
   }
 
   _getReviewsTable(reviews) {
-    let reviewsTable = '<table>';
+    let reviewsTable = '<div><ul id="reviews-ul">';
 
     for (const reviewIndex in reviews) {
       const review = reviews[reviewIndex];
 
-      reviewsTable += `<tr><td>${review}</td></tr>`;
+      reviewsTable += `<li>${review}</li>`;
     }
 
-    reviewsTable += "</table>";
+    reviewsTable += "</ul></div>";
 
     return reviewsTable;
   }
@@ -52,51 +52,8 @@ class MovieView extends AbstractComponent {
     return recommendedBlock;
   }
 
-  _getEditBlock(movie) {
-    const datalist = `<datalist id="datalist-price">
-                        <option value="Подписка">
-                        <option value="Платно">
-                        <option value="Бесплатно">
-                      </datalist>`;
-
-    let priceText = movie.price;
-    let editPriceClass = 'class="hidden"';
-
-    if (!isNaN(movie.price.slice(0, movie.price.indexOf("$")))) {
-      priceText = "Платно";
-      editPriceClass = "";
-    }
-
-    return `<div class="popup">Click    
-              ${datalist}        
-                <div class="popuptext" id="myPopup">
-                  <input type="hidden" id="edit-movie-id" value="${movie.id}"/>
-                  <p><label for="edit-movie-name">Название:</label>
-                  <input type="text" name="edit-name" id="edit-movie-name" value="${movie.name}" size="30"/>
-                  </p>
-                  <p id="p-price">
-                  <label>Цена</label>
-                  <input type="text" id="edit-movie-price-text" list="datalist-price" value="${priceText}"/>
-                  <input type="text" name="edit-price+" id="edit-movie-price" maxlength="4" size="1" ${editPriceClass} value="${movie.price}" placeholder="$"/>
-                  </p>
-                  <p><label for="edit-movie-duration">Продолжительность, минут(ы):</label>
-                  <input type="text" name="edit-duration" id="edit-movie-duration" value="${movie.duration}" maxlength="3" size="1"/>
-                  </p>
-                  <p><label for="edit-movie-genre">Жанры:</label>
-                  <input type="text" name="edit-genre" id="edit-movie-genre" value="${movie.genre}" size="30"/>
-                  </p>
-                  <p><label for="edit-movie-description">Описание:</label>                
-                  <textarea name="edit-description" id="edit-movie-description" class="description-textarea">${movie.description}</textarea>
-                  </p>
-                  <p><label for="edit-movie-languages">Языки:</label>
-                  <input type="text" name="edit-languages" id="edit-movie-languages" value="${movie.languages}" size="30"/>
-                  </p>
-                  <p><label for="edit-movie-videoQuality">Качество видео:</label>
-                  <input type="text" name="edit-videoQuality" id="edit-movie-videoQuality" value="${movie.videoQuality}" size="10"/>
-                  </p>
-                  <input type="button" value="Сохранить" style="margin: 20px" id="edit-save"/>
-                </div>
-            </div>`;
+  getEditForm(cb) {
+    this.editForm = cb;
   }
 
   getTemplate() {
@@ -127,12 +84,13 @@ class MovieView extends AbstractComponent {
 
     row += `<p>Актёры: <br> ${this._getActorsTable(this.movie.actors)}`;
 
-    row += `<p>Комментарии: ${this._getReviewsTable(this.movie.reviews)}</p>`;
+    row += `<div id="comments-block">Комментарии: ${this._getReviewsTable(this.movie.reviews)}</div>`;
+
     row += "</div>";
 
     row += '<input type="button" value="К списку фильмов" style="margin: 20px" id="movie-to-list"/>';
 
-    row += this._getEditBlock(this.movie);
+    row += this.editForm(this.movie);
     return row;
   }
 
