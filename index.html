@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Movie list</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css" />
-  <title>Movie list</title>
-</head>
-
-<body>
-  <div class="left-block">
-    <div class="left-block-select" id="filters-div">      
+  <body>
+    <div class="left-block">
+      <div class="left-block-select" id="filters-div"></div>
     </div>
-  </div>
-  <div class="right-block">
-    <div id="movie-list"></div>
-  </div>
-  <script src="./public/bundle.js"></script>
-</body>
-
+    <div class="right-block">
+      <div id="movie-list"></div>
+      <div id="one-movie" class="hidden"></div>
+    </div>
+    <input type="button" />
+    <script src="./public/bundle.js"></script>
+  </body>
 </html>

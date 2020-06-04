@@ -1,64 +1,12 @@
-import { movieGenres, movieLaguages, moviePrice } from "./data";
-import { Component } from "../utils";
+import { AbstractComponent } from "../common/abstract-component";
 
-const FILTER = {
-  types: {
-    buttons: {
-      submitButton: {
-        name: "submit",
-        class: "filter-button",
-        id: "submit-button",
-      },
-      addButton: {
-        name: "add",
-        class: "filter-button",
-        id: "add-button",
-      },
-      deleteButton: {
-        name: "delete",
-        class: "filter-button",
-        id: "delete-button",
-      },
-      editbutton: {
-        name: "edit",
-        class: "filter-button",
-        id: "edit-button",
-      },
-    },
-    selects: {
-      genreSelect: {
-        dataArray: movieGenres,
-        name: "genre-select",
-        class: "filter-select",
-        id: "genre-sel",
-      },
-      languagesSelect: {
-        dataArray: movieLaguages,
-        name: "languages-select",
-        class: "filter-select",
-        id: "languages-sel",
-      },
-      priceSelect: {
-        dataArray: moviePrice,
-        name: "price-select",
-        class: "filter-select",
-        id: "price-sel",
-      },
-    },
-  },
-  additionalData: {
-    selectsNames: ["Жанр", "Язык", "Цена"],
-    buttonsNames: ["Выбрать", "Добавить", "Удалить", "Корректировать"],
-  },
-};
-
-class Filters extends Component {
+class FiltersView extends AbstractComponent {
   constructor(filters) {
     super();
     this.filters = filters;
   }
 
-  selectsOptionFill() {
+  _selectsOptionFill() {
     for (const selectName in this.filters.types.selects) {
       const select = this.filters.types.selects[selectName];
       const domElement = document.querySelector(`#${select.id}`);
@@ -74,15 +22,15 @@ class Filters extends Component {
   }
 
   getTemplate() {
-    const selectsHtml = this.getSelectsTemplate();
-    const buttonsHTML = this.getButtonsTemplate();
+    const selectsHtml = this._getSelectsTemplate();
+    const buttonsHTML = this._getButtonsTemplate();
 
     const filtersHTML = selectsHtml + buttonsHTML;
 
     return filtersHTML;
   }
 
-  getSelectsTemplate() {
+  _getSelectsTemplate() {
     let selectHTML = "<div class=\"selects-div\">";
 
     const selectsToArray = Object.keys(this.filters.types.selects);
@@ -107,7 +55,7 @@ class Filters extends Component {
     return selectHTML;
   }
 
-  getButtonsTemplate() {
+  _getButtonsTemplate() {
     let buttonsHTML = "<div class=\"buttons-div\">";
     const buttonsToArray = Object.keys(this.filters.types.buttons);
 
@@ -126,6 +74,13 @@ class Filters extends Component {
 
     return buttonsHTML;
   }
+
+  // eslint-disable-next-line class-methods-use-this
+  setHandler(action, handler) {
+    const button = document.querySelector(`#${action}-button`);
+
+    button.addEventListener("click", handler);
+  }
 }
 
-export { Filters, FILTER };
+export { FiltersView };

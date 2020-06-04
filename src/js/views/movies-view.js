@@ -1,14 +1,12 @@
-/* eslint-disable no-console */
 import {
   movieGenres,
   movieLaguages,
   moviePrice,
-  getMovies,
-} from "./data";
+} from "../common/data";
 
-import { Component } from "../utils";
+import { AbstractComponent } from "../common/abstract-component";
 
-class Movies extends Component {
+class MoviesView extends AbstractComponent {
   constructor(movies) {
     super();
     this.movies = movies;
@@ -42,12 +40,11 @@ class Movies extends Component {
 
     row = `<div class="movie-from-list">
              <p>Название:
-               <a
-                 class="title-link"
-                 href="movie.html?id=${movie.id}" 
-                 title="Перейти к фильму">
-                 ${movie.name}                
-               </a>
+                <input type="button" 
+                       class="title-link title-chk" 
+                       data-movie-id="${movie.id}"
+                       id="movie-${movie.id}" 
+                       value="${movie.name}" />
              </p>
              <p>Цена: ${movie.price}</p>
              <p>Рейтинг: ${movie.rating}</p>
@@ -78,49 +75,12 @@ class Movies extends Component {
     return col;
   }
 
-  edit(id, data) {
-    const index = this.movies.findIndex((movie) => movie.id === id);
+  // eslint-disable-next-line class-methods-use-this
+  setMovieLinkHandler(handler) {
+    const button = document.querySelector("#movie-list");
 
-    this.movies[index] = Object.assign(this.movies[index], data);
-  }
-
-  delete(id) {
-    const index = this.movies.findIndex((movie) => movie.id === id);
-
-    this.movies.splice(index, 1);
-  }
-
-  addRandomMovies(quantity) {
-    const newMovies = getMovies(quantity);
-
-    for (const movieIndex in newMovies) {
-      const movie = newMovies[movieIndex];
-
-      movie.id = this.movies.length;
-
-      this.movies.push(movie);
-    }
-  }
-
-  getAll() {
-    this.render("movie-list");
-  }
-
-  get(id) {
-    let movieById = null;
-
-    for (const movieIndex in this.movies) {
-      if (this.movies[movieIndex].id === id) {
-        movieById = this.movies[movieIndex];
-      }
-    }
-
-    const row = this._getMovieRow(movieById);
-
-    document.querySelector("#movie-list").innerHTML = row;
+    button.addEventListener("click", handler);
   }
 }
 
-export {
-  Movies,
-};
+export { MoviesView };
