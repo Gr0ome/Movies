@@ -21,6 +21,10 @@ class PageController extends AbstractComponent {
     this.filtersController.init();
     this.moviesController.init();
 
+    this.setHandlers();
+  }
+
+  setHandlers() {
     this.filtersController.setDeleteHandler(() => {
       const deleteIndex = +prompt("Укажите ID удаляемого объекта", "");
       alert(this.moviesController.remove(deleteIndex));
@@ -34,9 +38,17 @@ class PageController extends AbstractComponent {
     });
 
     this.filtersController.setAddHandler(() => {
-      this.addMovie.innerHTML = this.getEditForm({});
+      this.addMovie.innerHTML = this.getAddForm();
 
-      this.addSaveEventListener("add-save");
+      document.querySelector(`#add-save`).addEventListener("click", () => {
+        const data = this.getDataForApi("add");
+        console.log(data);
+
+        this.moviesController.moviesModel.create(data, () => {
+          this.currentViewMode = "list";
+          this.toggleModeView(this.currentViewMode);
+        });
+      });
 
       this.currentViewMode = "add";
       this.toggleModeView();
@@ -47,32 +59,54 @@ class PageController extends AbstractComponent {
     });
   }
 
-  addSaveEventListener(id) {
-    document.querySelector(`#${id}`).addEventListener("click", (evt) => {
-      console.log(evt.target);
-    });
+  getDataForApi(action) {
+    const id = this.moviesController.moviesModel.movies.length + 1;
+    const data = { id };
+
+    const emptyObjectKeys = Object.keys(this.moviesController.moviesModel.movies[0]);
+
+    for (const keyIndex in emptyObjectKeys) {
+      const key = emptyObjectKeys[keyIndex];
+
+      const element = document.querySelector(`#${action}-movie-${key}`);
+
+      const numberTypeKeys = ["id", "rating", "duration"];
+      // const charTypeKeys = ["name", "description", "videoQuality"];
+      const arrayTypeKeys = ["genre", "languages"];
+
+      if (element) {
+        let elementValue = element.value;
+
+        if (key === "price" && elementValue === "Платно") {
+          elementValue = Number(document.querySelector(`#${action}-movie-price-money`).value);
+        }
+
+        if (numberTypeKeys.includes(key)) {
+          elementValue = +elementValue;
+        } else if (arrayTypeKeys.includes(key)) {
+          elementValue = elementValue.split(",");
+        }
+
+        data[key] = elementValue;
+      }
+    }
+
+    return data;
   }
 
-  getEditForm(movie) {
-    const datalist = `<datalist id="datalist">
+  getAddForm() {
+    const movie = {};
+    const datalist = `<datalist id="add-datalist">
                         <option value="Подписка">
                         <option value="Платно">
                         <option value="Бесплатно">
                       </datalist>`;
-    let popupAttributes = 'class="popuptext" id="myPopup"';
-    let actionTitle = "Редактировать";
-    let action = "edit";
 
-    if (!movie.id) {
-      const emptyObjectKeys = Object.keys(this.moviesController.moviesModel.movies[0]);
-      for (const keyIndex in emptyObjectKeys) {
-        const key = emptyObjectKeys[keyIndex];
-        movie[key] = "";
-      }
+    const emptyObjectKeys = Object.keys(this.moviesController.moviesModel.movies[0]);
 
-      popupAttributes = 'id="addPopup"';
-      actionTitle = "Добавить новый фильм";
-      action = "add";
+    for (const keyIndex in emptyObjectKeys) {
+      const key = emptyObjectKeys[keyIndex];
+      movie[key] = "";
     }
 
     let priceText = movie.price;
@@ -83,34 +117,33 @@ class PageController extends AbstractComponent {
       editPriceClass = "";
     }
 
-    return `<div class="popup">${actionTitle}
+    return `<div class="popup">Добавить новый фильм
               ${datalist}        
-                <div ${popupAttributes}>
-                  <input type="hidden" id="${action}-movie-id" value="${movie.id}"/>
-                  <p><label for="${action}-movie-name">Название:</label>
-                  <input type="text" name="${action}-name" id="${action}-movie-name" value="${movie.name}" size="30"/>
+                <div id="addPopup"
+                  <p><label for="add-movie-name">Название:</label>
+                  <input type="text" name="add-name" id="add-movie-name" value="${movie.name}" size="30"/>
                   </p>
                   <p id="p-price">
                   <label>Цена</label>
-                  <input type="text" id="${action}-movie-price-text" list="datalist" value="${priceText}"/>
-                  <input type="text" name="${action}-price+" id="${action}-movie-price" maxlength="4" size="1" ${editPriceClass} value="${movie.price}" placeholder="$"/>
+                  <input type="text" id="add-movie-price" list="add-datalist" value="${priceText}"/>
+                  <input type="text" name="add-price" id="add-movie-price-money" maxlength="4" size="1" ${editPriceClass} value="${movie.price}" placeholder="$"/>
                   </p>
-                  <p><label for="${action}-movie-duration">Продолжительность, минут(ы):</label>
-                  <input type="text" name="${action}-duration" id="${action}-movie-duration" value="${movie.duration}" maxlength="3" size="1"/>
+                  <p><label for="add-movie-duration">Продолжительность, минут(ы):</label>
+                  <input type="text" name="add-duration" id="add-movie-duration" value="${movie.duration}" maxlength="3" size="1"/>
                   </p>
-                  <p><label for="${action}-movie-genre">Жанры:</label>
-                  <input type="text" name="${action}-genre" id="${action}-movie-genre" value="${movie.genre}" size="30"/>
+                  <p><label for="add-movie-genre">Жанры:</label>
+                  <input type="text" name="add-genre" id="add-movie-genre" value="${movie.genre}" size="30"/>
                   </p>
-                  <p><label for="${action}-movie-description">Описание:</label>                
-                  <textarea name="${action}-description" id="${action}-movie-description" class="description-textarea">${movie.description}</textarea>
+                  <p><label for="add-movie-description">Описание:</label>                
+                  <textarea name="add-description" id="add-movie-description" class="description-textarea">${movie.description}</textarea>
                   </p>
-                  <p><label for="${action}-movie-languages">Языки:</label>
-                  <input type="text" name="${action}-languages" id="${action}-movie-languages" value="${movie.languages}" size="30"/>
+                  <p><label for="add-movie-languages">Языки:</label>
+                  <input type="text" name="add-languages" id="add-movie-languages" value="${movie.languages}" size="30"/>
                   </p>
-                  <p><label for="${action}-movie-videoQuality">Качество видео:</label>
-                  <input type="text" name="${action}-videoQuality" id="${action}-movie-videoQuality" value="${movie.videoQuality}" size="10"/>
+                  <p><label for="add-movie-videoQuality">Качество видео:</label>
+                  <input type="text" name="add-videoQuality" id="add-movie-videoQuality" value="${movie.videoQuality}" size="10"/>
                   </p>
-                  <input type="button" value="Сохранить" style="margin: 20px" id="${action}-save" class="save"/>
+                  <input type="button" value="Сохранить" style="margin: 20px" id="add-save" class="save"/>
                 </div>
             </div>`;
   }
@@ -119,8 +152,6 @@ class PageController extends AbstractComponent {
     const recommendedMovies = this._getRecommendedMovies(
       this.movieController.movieModel.movie.recommended,
     );
-
-    this.movieController.movieView.getEditForm(this.getEditForm);
 
     this.movieController.movieView._getRecommendedMovies(recommendedMovies);
 
@@ -136,7 +167,7 @@ class PageController extends AbstractComponent {
     });
 
     this.movieController.movieView.setEditHandler(() => {
-      const popup = document.querySelector("#myPopup");
+      const popup = document.querySelector("#editPopup");
       popup.classList.add("show");
 
       this.movieController.movieView.setPriceDatalistHandler((evt) => {
@@ -147,9 +178,14 @@ class PageController extends AbstractComponent {
           editPrice.value = "";
         }
       });
-    });
 
-    this.addSaveEventListener("edit-save");
+      document.querySelector(`#edit-save`).addEventListener("click", () => {
+        const id = document.querySelector("#edit-movie-id").value;
+        const data = this.getDataForApi("edit");
+
+        this.moviesController.edit(id, data);
+      });
+    });
   }
 
   _getRecommendedMovies(recommendedList) {

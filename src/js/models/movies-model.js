@@ -8,7 +8,14 @@ class MoviesModel {
 
   edit(id, data, cb) {
     this.api.update(id, data, () => {
-      this.getAll(cb);
+      cb();
+    });
+  }
+
+  create(data, cb) {
+    this.api.create(data, (movies) => {
+      this.movies = movies;
+      cb();
     });
   }
 

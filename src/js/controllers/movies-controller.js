@@ -7,20 +7,20 @@ class MoviesController {
     this.moviesView = new MoviesView(this.moviesModel.movies);
   }
 
-  _moviesViewRewrite() {
+  moviesViewRewrite() {
     this.moviesView.movies = this.moviesModel.movies;
     this.moviesView.render("#movie-list");
   }
 
   init() {
     this.moviesModel.getAll(() => {
-      this._moviesViewRewrite();
+      this.moviesViewRewrite();
     });
   }
 
   remove(id) {
     return this.moviesModel.remove(id, () => {
-      this._moviesViewRewrite();
+      this.moviesViewRewrite();
     });
   }
 

@@ -1,10 +1,15 @@
+import { Api } from "../common/api";
+
 class MovieModel {
   constructor(movie) {
     this.movie = movie;
+    this.api = new Api("http://localhost:4433/api/movies/");
   }
 
-  edit(id, data) {
-    this.movie = Object.assign(this.movie, data);
+  edit(id, data, cb) {
+    this.api.update(id, data, () => {
+      cb();
+    });
   }
 }
 

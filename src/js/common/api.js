@@ -12,9 +12,9 @@ class Api {
       cb(JSON.parse(event.target.response));
     });
 
-    const [id, data] = args;
+    const [data, id] = args;
 
-    xhr.send(JSON.stringify({ id, data }));
+    xhr.send(JSON.stringify({ data, id }));
   }
 
   getAll(cb) {
@@ -27,15 +27,15 @@ class Api {
   }
 
   update(id, data, cb) {
-    this.xhrRequest("put", cb, this.url, id, data);
+    this.xhrRequest("put", cb, this.url, data, id);
   }
 
   remove(id, cb) {
     this.xhrRequest("delete", cb, this.url, id);
   }
 
-  create(cb) {
-    this.xhrRequest("post", cb, this.url);
+  create(data, cb) {
+    this.xhrRequest("post", cb, this.url, data);
   }
 
   restart(cb) {
