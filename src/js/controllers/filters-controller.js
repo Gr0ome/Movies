@@ -13,22 +13,10 @@ class FiltersController {
     this.filtersView._selectsOptionFill();
   }
 
-  setDeleteHandler(cb) {
-    this.filtersView.setHandler("delete", () => {
+  setButtonHandler(action, cb) {
+    this.filtersView.setHandler(`${action}`, () => {
       cb();
     });
-  }
-
-  setPickHandler(cb) {
-    this.filtersView.setHandler("pick", () => {
-      cb();
-    });
-  }
-
-  setAddHandler(cb) {
-    this.filtersView.setHandler("add", () => {
-      cb();
-    })
   }
 }
 

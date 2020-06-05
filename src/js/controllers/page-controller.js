@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { MoviesController } from "./movies-controller";
 import { MovieController } from "./movie-controller";
 import { FiltersController } from "./filters-controller";
@@ -25,26 +24,29 @@ class PageController extends AbstractComponent {
   }
 
   setHandlers() {
-    this.filtersController.setDeleteHandler(() => {
+    this.filtersController.setButtonHandler("delete", () => {
       const deleteIndex = +prompt("Укажите ID удаляемого объекта", "");
       alert(this.moviesController.remove(deleteIndex));
     });
 
-    this.filtersController.setPickHandler(() => {
+    this.filtersController.setButtonHandler("pick", () => {
       this.moviesController.pick(() => {
         this.currentViewMode = "list";
         this.toggleModeView(this.currentViewMode);
       });
     });
 
-    this.filtersController.setAddHandler(() => {
+    this.filtersController.setButtonHandler("restart", () => {
+      this.moviesController.restart();
+    });
+
+    this.filtersController.setButtonHandler("add", () => {
       this.addMovie.innerHTML = this.getAddForm();
 
       document.querySelector(`#add-save`).addEventListener("click", () => {
         const data = this.getDataForApi("add");
-        console.log(data);
 
-        this.moviesController.moviesModel.create(data, () => {
+        this.moviesController.create(data, () => {
           this.currentViewMode = "list";
           this.toggleModeView(this.currentViewMode);
         });

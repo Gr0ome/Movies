@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { Api } from "../common/api";
 
 class MoviesModel {
@@ -16,6 +15,13 @@ class MoviesModel {
     this.api.create(data, (movies) => {
       this.movies = movies;
       cb();
+    });
+  }
+
+  restart() {
+    this.api.restart((text) => {
+      alert(text);
+      location.reload();
     });
   }
 

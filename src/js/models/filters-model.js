@@ -18,6 +18,11 @@ class FiltersModel {
             class: "filter-button",
             id: "delete-button",
           },
+          restart: {
+            name: "restart",
+            class: "filter-button",
+            id: "restart-button",
+          }
         },
         selects: {
           genre: {
@@ -42,7 +47,7 @@ class FiltersModel {
       },
       additionalData: {
         selectsNames: ["Жанр", "Язык", "Цена"],
-        buttonsNames: ["Выбрать", "Добавить", "Удалить", "Корректировать"],
+        buttonsNames: ["Выбрать", "Добавить", "Удалить", "Рестарт"],
       },
     };
   }

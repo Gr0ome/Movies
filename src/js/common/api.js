@@ -12,9 +12,14 @@ class Api {
       cb(JSON.parse(event.target.response));
     });
 
-    const [data, id] = args;
+    const [id, data] = args;
+    let sendText = JSON.stringify({ data });
 
-    xhr.send(JSON.stringify({ data, id }));
+    if (id) {
+      sendText = JSON.stringify({ id, data });
+    }
+
+    xhr.send(sendText);
   }
 
   getAll(cb) {
@@ -27,19 +32,27 @@ class Api {
   }
 
   update(id, data, cb) {
-    this.xhrRequest("put", cb, this.url, data, id);
+    this.xhrRequest("put", cb, this.url, id, data);
   }
 
   remove(id, cb) {
-    this.xhrRequest("delete", cb, this.url, id);
+    this.xhrRequest("delete", cb, this.url, id, null);
   }
 
   create(data, cb) {
-    this.xhrRequest("post", cb, this.url, data);
+    this.xhrRequest("post", cb, this.url, null, data);
   }
 
   restart(cb) {
-    this.xhrRequest("get", cb, "http://localhost:4433/api/init/");
+    const xhr = new XMLHttpRequest();
+    xhr.open("get", "http://localhost:4433/api/init/");
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.addEventListener("load", (event) => {
+      cb(event.target.response);
+    });
+
+    xhr.send();
   }
 }
 

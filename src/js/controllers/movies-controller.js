@@ -24,6 +24,10 @@ class MoviesController {
     });
   }
 
+  restart() {
+    this.moviesModel.restart();
+  }
+
   pick(cb) {
     this.moviesView.render("#movie-list");
     cb();
@@ -32,6 +36,13 @@ class MoviesController {
   edit(id, data) {
     this.moviesModel.edit(id, data, () => {
       location.reload();
+    });
+  }
+
+  create(data, cb) {
+    this.moviesModel.create(data, () => {
+      this.moviesViewRewrite();
+      cb();
     });
   }
 }
